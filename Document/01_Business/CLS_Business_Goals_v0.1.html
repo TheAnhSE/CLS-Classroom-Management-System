@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Goals - CLS Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --text-main: #334155;
+            --border: #e2e8f0;
+            --text-vi: #64748b;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: var(--text-main); line-height: 1.6; padding: 2rem; }
+        .doc-container { max-width: 900px; margin: 0 auto; background: white; padding: 4rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-top: 6px solid var(--accent); border-radius: 8px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+        .title { font-size: 2.2rem; margin: 0 0 0.5rem 0; color: var(--primary); }
+        .sub-title { color: #64748b; font-size: 1.1rem; }
+        .status-draft { display: inline-block; background: #fefce8; color: #a16207; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; font-weight: bold; border: 1px solid #fef08a;}
+        h2 { color: var(--primary); font-size: 1.4rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; }
+        .grid-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+        .card { border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px; background: #f8fafc; }
+        .card h3 { color: #1d4ed8; margin-top: 0; display: flex; flex-direction: column; gap: 0.2rem;}
+        .card h3 span.vi { font-size: 0.9rem; color: #475569; font-weight: normal; }
+        .metric-badge { background: #dbeafe; color: #1e40af; padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: bold; font-size: 1.2rem; display: inline-block; margin-bottom: 1rem;}
+        ul { padding-left: 1.5rem; margin-bottom: 0;}
+        .vi-text { font-size: 0.9rem; color: var(--text-vi); display: block; margin-top: 0.2rem; }
+        .main-text { font-weight: 500; color: #334155; margin-bottom: 0.2rem; }
+        .list-item { margin-bottom: 1rem; }
+        .oath-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1.5rem; margin-top: 2.5rem; }
+        .full-width { grid-column: 1 / -1; }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <div class="header">
+            <div>
+                <h1 class="title">Business Goals & KPIs</h1>
+                <div class="vi-text" style="font-size: 1.2rem;">Danh sách Mục tiêu Kinh doanh & KPIs</div>
+                <div class="sub-title" style="margin-top: 0.7rem;">As-Is Context & To-Be Goals for Center Management System</div>
+                <div class="vi-text">Khảo sát Phân tích Hiện trạng (As-Is) & Định hướng Mục tiêu (To-Be) của Giải pháp Quản trị Trung tâm (CMS/EdTech)</div>
+            </div>
+            <div>
+                <span class="status-draft" style="background: #e0e7ff; color: #4338ca; border-color: #c7d2fe;">Version: v0.3 (MVP 3-Weeks Focused)</span>
+            </div>
+        </div>
+
+        <h2>1. Pain Points - As-Is Context <br><span class="vi-text" style="font-size: 1rem; font-weight: normal;">Nhận diện Điểm nghẽn Vận hành (As-Is)</span></h2>
+        <p class="main-text">Based on the operational analysis of our English and Kids Coding Center (1 branch, 50-150 active learners, manually managed via spreadsheets), we have identified critical operational bottlenecks impeding business scalability and customer trust:</p>
+        <p class="vi-text" style="margin-bottom: 1rem;">Dựa trên phân tích vận hành thực tế tại Trung tâm Tiếng Anh và Lập trình trẻ em (quy mô 1 cơ sở, 50-150 học viên thường xuyên, hiện đang quản lý hoàn toàn thủ công qua nền tảng Excel), chúng tôi đã xác định các điểm nghẽn nghiêm trọng đang cản trở khả năng quy mô hóa (scale-up) vòng đời khách hàng và uy tín thương hiệu:</p>
+        
+        <ul>
+            <li class="list-item">
+                <strong class="main-text">Fragmented Parent Communication (Sponsor Engagement):</strong> Parents lack real-time visibility into their child's academic progress, attendance records, and teacher evaluations, relying heavily on manual, reactive inquiries.<br>
+                <span class="vi-text"><strong>Giao tiếp Phụ huynh phân mảnh (Đứt gãy tương tác với Người bảo trợ tài chính):</strong> Phụ huynh thiếu khả năng theo dõi tiến độ học tập, lịch sử điểm danh và phản hồi từ giáo viên theo thời gian thực. Giao tiếp thụ động và kém chuyên nghiệp, chủ yếu chờ Phụ huynh chủ động truy vấn.</span>
+            </li>
+            <li class="list-item">
+                <strong class="main-text">Inefficient Academic & Financial Administration:</strong> Tracking tuition fee collection and sending manual payment reminders via personal messaging apps (e.g., Zalo) is highly time-consuming, lacks corporate standardization, and exponentially increases the risk of bad debt.<br>
+                <span class="vi-text"><strong>Hành chính Học vụ & Tài chính kém hiệu quả:</strong> Việc lưu vết công nợ học phí và thực hiện nhắc nợ thủ công qua tin nhắn cá nhân tốn rất nhiều giờ công, thiếu chuẩn mực quản trị chuyên nghiệp, và tiềm ẩn rủi ro nợ xấu/thất thoát doanh thu rất lớn.</span>
+            </li>
+            <li class="list-item">
+                <strong class="main-text">High Churn Risk & Poor Cash Flow Visibility:</strong> Relying on unintegrated tracking methods prevents the academic team from performing proactive renewal and upselling interventions before a learner decides to drop out.<br>
+                <span class="vi-text"><strong>Rủi ro Tỷ lệ Bỏ học (Churn rate) cao & Mù mờ Dòng tiền:</strong> Việc không có hệ thống cảnh báo tự động khiến trung tâm thường xuyên bỏ lỡ "thời điểm vàng" để tư vấn gia hạn (renewal/upsell) gói cước trước khi học viên có ý định rời bỏ dịch vụ.</span>
+            </li>
+            <li class="list-item">
+                <strong class="main-text">Resource Allocation & Scalability Limitations:</strong> Managing timetables, classroom utilization, and teacher assignments across multiple sessions using distributed spreadsheets frequently triggers scheduling conflicts and double-booking events.<br>
+                <span class="vi-text"><strong>Hạn chế Khả năng Phân bổ Nguồn lực & Mở rộng quy mô:</strong> Tác vụ xếp thời khóa biểu và phân công chi tiết giáo viên/phòng học trên file Excel thường xuyên dẫn đến xung đột hệ thống, trùng lịch, trùng phòng học và trực tiếp cản trở năng suất.</span>
+            </li>
+        </ul>
+
+        <h2>2. SMART Business Goals (MVP Phase 1) <br><span class="vi-text" style="font-size: 1rem; font-weight: normal;">Mục tiêu Kinh doanh Chiến lược (Theo sát phạm vi 3 tuần MVP)</span></h2>
+        <p class="main-text">To adhere to the strict 3-week MVP timeline, the Center Management System (CMS) core development will be stringently scoped. It will prioritize Parent-centric engagement pipelines and core Administrative automation processes to actualize these KPIs:</p>
+        <p class="vi-text" style="margin-bottom: 1rem;">Để đảm bảo tuyệt đối tiến độ phát hành MVP trong vòng 3 tuần, Hệ thống Quản trị Trung tâm (CMS) sẽ được điều hướng phạm vi cực kỳ khắt khe: tập trung số hóa luồng tương tác trải nghiệm Phụ huynh và tự động hóa chuỗi tính năng Hành chính thiết yếu, nhằm đạt được các chỉ số KPIs sau:</p>
+
+        <div class="grid-cards">
+            <!-- G1 -->
+            <div class="card full-width">
+                <h3>1. Digitize Parent-Center Engagement (Parent Portal)<span class="vi">Số hóa Trải nghiệm Tương tác Phụ huynh (Parent Portal)</span></h3>
+                <div class="metric-badge">100% Automated Communication</div>
+                <p class="vi-text" style="margin-bottom: 1rem;">Tự động hóa 100% Giao tiếp & Thông báo</p>
+                <p class="main-text">Deliver undeniable transparency and peace of mind to financial sponsors (parents) via proactive, automated connectivity.</p>
+                <p class="vi-text" style="margin-bottom: 1rem;">Cung cấp sự cam kết minh bạch và mang tới sự an tâm toàn diện cho người chi trả (phụ huynh) thông qua nền tảng tự động kết nối liền mạch.</p>
+                <ul>
+                    <li class="list-item">
+                        <strong>Goal:</strong> Eliminate manual SMS/Zalo notifications. Implement zero-touch, automated Email dispatches (Phase 1 MVP) for real-time schedule modifications and daily attendance logs.<br>
+                        <span class="vi-text"><strong>Mục tiêu:</strong> Loại bỏ hoàn toàn sự can thiệp thủ công từ nhân viên. Triển khai hệ thống kích hoạt Email tự động (Giai đoạn 1) thông báo tức thời tình trạng điểm danh hàng ngày và các biến động lịch học.</span>
+                    </li>
+                    <li class="list-item">
+                        <strong>Practical EdTech Logic:</strong> Parents exhibit low adoption rates for daily login habits on niche center portals. Therefore, push multi-channel notifications directly to their ecosystem are imperative for strong user retention.<br>
+                        <span class="vi-text"><strong>Thực tế Sản phẩm EdTech:</strong> Hành vi của phụ huynh hiện tại hiếm khi chủ động đăng nhập App trung tâm thụ động mỗi ngày. Việc cung cấp thông báo đẩy (push/email) chủ động là yếu tố bắt buộc để tăng điểm tiếp xúc và giá trị dịch vụ.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- G2 -->
+            <div class="card">
+                <h3>2. Cash Flow Security & Learner Retention<span class="vi">Bảo vệ Dòng tiền & Tối ưu Tỷ lệ Tái tục</span></h3>
+                <div class="metric-badge">Reduce Student Churn by 20%</div>
+                <p class="vi-text" style="margin-bottom: 1rem;">Giảm 20% Tỷ lệ Bỏ học (Churn Rate)</p>
+                <p class="main-text">Proactively secure enrollment lifespan and safeguard center liquidity.</p>
+                <p class="vi-text" style="margin-bottom: 1rem;">Chủ động kéo dài vòng đời học viên, bảo vệ huyết mạch tài chính của trung tâm.</p>
+                <ul>
+                    <li class="list-item">
+                        <strong>Goal:</strong> Automate tuition collection visibility. Trigger real-time system alerts to Academic Admins precisely 2 weeks before a learner's package depletes to orchestrate strategic renewal procedures.<br>
+                        <span class="vi-text"><strong>Mục tiêu:</strong> Tự động hóa khả năng nhận diện công nợ và chu kỳ học phí. Kích hoạt cảnh báo hệ thống cho khối Giáo vụ đúng 2 tuần trước khi học viên cạn gói học, tạo không gian thực thi chính sách tái tục (renewal) kịp thời.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- G3 -->
+            <div class="card">
+                <h3>3. Optimize Admin Operational Efficiency<span class="vi">Tối ưu hóa Hiệu suất Vận hành Hành chính</span></h3>
+                <div class="metric-badge">Reclaim 15 Man-hours/Week</div>
+                <p class="vi-text" style="margin-bottom: 1rem;">Giải phóng 15 Giờ công/Tuần</p>
+                <p class="main-text">Eradicate legacy low-value, repetitive data entry operations.</p>
+                <p class="vi-text" style="margin-bottom: 1rem;">Xóa sổ hoàn toàn các chu trình nhập liệu lặp lại mang tính giá trị thấp.</p>
+                <ul>
+                    <li class="list-item">
+                        <strong>Goal:</strong> Migrate 100% of student enrollment lifecycles, tuition payment tracking, and session attendance counting directly from offline spreadsheets to a unified digital database core.<br>
+                        <span class="vi-text"><strong>Mục tiêu:</strong> Dịch chuyển toàn diện quy trình Onboarding nhập học, ghi nhận học phí và kiểm đếm số buổi học từ các tệp Excel phân mảnh vào một Hệ quản trị CSDL trung tâm hợp nhất.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- G4 -->
+            <div class="card full-width">
+                <h3>4. Centralized Resource Allocation & Academic QA<span class="vi">Quản trị Nguồn lực & Kiểm soát Chất lượng Đào tạo (QA)</span></h3>
+                <div class="metric-badge">0 Scheduling Conflicts Target</div>
+                <p class="vi-text" style="margin-bottom: 1rem;">Triệt tiêu 100% Lỗi Xung đột Lịch biểu</p>
+                <p class="main-text">Enforce fail-safe operations and strengthen academic accountability mechanisms.</p>
+                <p class="vi-text" style="margin-bottom: 1rem;">Đảm bảo bộ máy vận hành trơn tru và gắn kết chế tài trách nhiệm chuyên môn chặt chẽ.</p>
+                <ul>
+                    <li class="list-item">
+                        <strong>Goal:</strong> Mitigate teacher and classroom double-booking vulnerabilities using strict algorithmic validation rules. Institute an SLA mandating teachers to publish academic feedback internally within 12 hours post-session.<br>
+                        <span class="vi-text"><strong>Mục tiêu:</strong> Khắc phục lỗi trùng lặp nguồn lực (phòng, giáo viên) bằng các rào cản thuật toán duyệt lịch tập trung. Áp đặt tiêu chuẩn SLA bắt buộc khối Giảng dạy phải hoàn thiện bản ghi nhớ học thuật và nhận xét học viên trong khung 12h sau giờ lên lớp.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="oath-box">
+            <p style="margin: 0; color: #1e40af; line-height: 1.6;">
+                <strong>Project Oath:</strong> "The CLS architecture strictly refuses disjointed or bloated IT features. It is a robust, precision-focused operational engine designed specifically to foster undeniable trust with paying parents, secure the center's financial liquidity, and permanently eradicate administrative bottlenecks typical in the EdTech SMB sector." - <i>BA Leader / Product Manager</i>
+                <br><br>
+                <span class="vi-text"><strong>Tuyên ngôn Dự án:</strong> "Dự án cấu trúc hệ thống CLS kiên quyết khước từ các tính năng phù phiếm, lan man. Định vị cốt lõi của nó là một cỗ máy vận hành thực dụng, được thiết kế chuyên biệt để xây dựng niềm tin không thể phá vỡ với tập Phụ huynh chi trả, bảo vệ tính thanh khoản dòng tiền, và xóa sổ vĩnh viễn các điểm nghẽn quản trị kinh điển của nhóm doanh nghiệp Giáo dục vừa và nhỏ." - <i>BA Leader / Product Manager</i></span>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

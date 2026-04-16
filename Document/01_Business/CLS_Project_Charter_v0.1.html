@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Charter - CLS Project</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #4a4a4a;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: #e9ecef;
+        }
+        .document-wrapper {
+            background: #fff;
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 60px 80px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            border-top: 6px solid #2563eb;
+            border-radius: 8px;
+        }
+        h1 {
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 2.6em;
+            font-weight: 400;
+            color: #0f172a;
+            margin-bottom: 25px;
+            margin-top: 0;
+        }
+        .header-divider {
+            border-bottom: 2px solid #93c5fd;
+            margin-bottom: 35px;
+        }
+        h2 {
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 1.8em;
+            color: #2563eb;
+            margin-top: 35px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 1.35em;
+            color: #3b82f6;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+        p {
+            margin-bottom: 18px;
+            font-size: 14.5px;
+            text-align: justify;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 14.5px;
+        }
+        table, th, td {
+            border: 1px solid #cbd5e1;
+        }
+        th, td {
+            padding: 10px 15px;
+        }
+        th {
+            font-weight: 600;
+            background: #f8fafc;
+            color: #1e40af;
+            text-align: center;
+        }
+        td {
+            color: #334155;
+        }
+        .overview-table td:first-child {
+            color: #1d4ed8;
+            font-weight: 500;
+            text-align: left;
+            width: 35%;
+            background: #f8fafc;
+        }
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .signature-block {
+            width: 45%;
+        }
+        .signature-line {
+            border-bottom: 1px solid #4a4a4a;
+            margin-bottom: 8px;
+            height: 40px;
+        }
+        .signature-name {
+            font-size: 14.5px;
+            color: #4a4a4a;
+        }
+        .page-break {
+            margin-top: 60px;
+        }
+        @media print {
+            body { background: #fff; }
+            .document-wrapper { box-shadow: none; margin: 0; padding: 20px; border-top: none; }
+            .page-break { page-break-before: always; margin-top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="document-wrapper">
+    <!-- Header -->
+    <h1>Project Charter</h1>
+    <div class="header-divider"></div>
+
+    <!-- Overview Section -->
+    <h2>Project Overview</h2>
+    
+    <table class="overview-table">
+        <tbody>
+            <tr>
+                <td>Project Name:</td>
+                <td>Hệ thống Quản trị Trung tâm (CLS - Classroom Management System)</td>
+            </tr>
+            <tr>
+                <td>Project Sponsor:</td>
+                <td>Giám đốc Trung tâm (Center Director)</td>
+            </tr>
+            <tr>
+                <td>Project Manager (PM):</td>
+                <td>Business Analyst / PM Lead</td>
+            </tr>
+            <tr>
+                <td>PM Email Address:</td>
+                <td>pm.lead@center.edu.vn</td>
+            </tr>
+            <tr>
+                <td>PM Phone Number:</td>
+                <td>09xx.xxx.xxx</td>
+            </tr>
+            <tr>
+                <td>Business Unit:</td>
+                <td>Khối Vận hành Hành chính & Học vụ</td>
+            </tr>
+            <tr>
+                <td>Expected Start Date:</td>
+                <td>20/04/2026</td>
+            </tr>
+            <tr>
+                <td>Expected Completion Date:</td>
+                <td>10/05/2026 (Phát hành MVP Phase 1 trong 3 tuần)</td>
+            </tr>
+            <tr>
+                <td>Estimated Budget:</td>
+                <td>Ngân sách phát triển MVP & Tích hợp Email API</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Description Section -->
+    <h2>Project Description</h2>
+    
+    <h3>Purpose</h3>
+    <p>Dự án CLS nhằm số hóa toàn diện quy trình vận hành đang phụ thuộc vào Excel của Trung tâm Tiếng Anh và Lập trình trẻ em. Mục đích cốt lõi là giải phóng 15 giờ công/tuần cho Giáo vụ, xây dựng niềm tin với phụ huynh qua hệ thống thông báo tự động, giảm 20% tỷ lệ bỏ học thông qua theo dõi công nợ - nhắc hạn tự động, và triệt tiêu 100% xung đột xếp lịch học.</p>
+
+    <h3>Scope</h3>
+    <p><strong>Bao gồm (In-scope):</strong> Parent Portal (Tự động hóa 100% Email điểm danh/thay đổi lịch học), Hệ thống cảnh báo tự động trước 2 tuần khi học viên hết gói học phí, Module Quản lý nhập học/vòng đời học viên tập trung, Thuật toán chấm xung đột xếp lịch biểu, và Tool nhập Feedback chuyên môn trong 12h.</p>
+    <p><strong>Không bao gồm (Out-of-scope) trong MVP:</strong> Các tính năng dư thừa không thiết yếu, Ứng dụng di động cài đặt riêng cho Phụ huynh (Mobile App độc lập), Hệ thống kế toán phức tạp, Phân hệ chấm công và tính lương (Core HR).</p>
+
+    <!-- Page Break Simulation -->
+    <div class="page-break"></div>
+
+    <!-- Deliverables Section -->
+    <h3>Key Deliverables</h3>
+    <p>1. Cổng quản lý Web-based (Core CMS) cho Admin và Giáo viên.<br>
+       2. Động cơ thông báo tự động (Automated Notification Engine) qua Email.<br>
+       3. Hệ quản trị CSDL trung tâm hợp nhất thay thế Excel.</p>
+
+    <!-- Resources Section -->
+    <h3>Resources</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Team Members</th>
+                <th>Facilities</th>
+                <th>Equipment</th>
+                <th>Other Resources</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1 PM / BA Leader</td>
+                <td>Phòng họp dự án</td>
+                <td>Hệ thống Server/Cloud</td>
+                <td>Email API (SendGrid/Amazon SES)</td>
+            </tr>
+            <tr>
+                <td>1 UI/UX, 1 QA</td>
+                <td>Figma/Jira Workspace</td>
+                <td>Môi trường Git</td>
+                <td>Data Excel cũ để import</td>
+            </tr>
+            <tr>
+                <td>2 Developers (Fullstack)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Schedule Section -->
+    <h3>Schedule (3-Week MVP)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Key Milestone</th>
+                <th>Start Date</th>
+                <th>Completion Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Khảo sát Hiện trạng, Thiết kế UI/UX & DB Architecture</td>
+                <td>20/04/2026</td>
+                <td>26/04/2026</td>
+            </tr>
+            <tr>
+                <td>Phát triển Core Admin, Tool xếp lịch & Notification Engine</td>
+                <td>27/04/2026</td>
+                <td>03/05/2026</td>
+            </tr>
+            <tr>
+                <td>Testing/UAT với Admin, Import Data & Go-Live MVP</td>
+                <td>04/05/2026</td>
+                <td>10/05/2026</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Risks Section -->
+    <h3>Risks</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Potential Risk</th>
+                <th>Perceived Impact</th>
+                <th>Proposed Mitigation Strategy</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Admin/Giáo vụ gặp khó khăn khi từ bỏ Excel</td>
+                <td>Cao (High)</td>
+                <td>Đào tạo sát sao, cung cấp các tool import hàng loạt (Bulk Import) từ format Excel quen thuộc.</td>
+            </tr>
+            <tr>
+                <td>Phụ huynh không thường xuyên kiểm tra Email</td>
+                <td>Cao (High)</td>
+                <td>Thiết kế tiêu đề Email rõ ràng (ví dụ: [Quan trọng] Lịch học...). Lên kế hoạch bổ sung push Zalo/SMS ở giai đoạn sau.</td>
+            </tr>
+            <tr>
+                <td>Giáo viên không tuân thủ SLA nhập Feedback trong 12h</td>
+                <td>Trung bình (Medium)</td>
+                <td>Thiết kế giao diện nhập liệu cực kỳ đơn giản, mobile-friendly; gắn việc hoàn thành SLA với hệ thống KPI/Chấm công của trung tâm.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Approval Section -->
+    <h2>Approval and Signatures</h2>
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">Center Director, Project Sponsor</div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">BA Leader, Project Manager</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

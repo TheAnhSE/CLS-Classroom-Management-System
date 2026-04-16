@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stakeholder Matrix - CLS Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --text-main: #334155;
+            --border: #e2e8f0;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: var(--text-main); line-height: 1.6; padding: 2rem; }
+        .doc-container { max-width: 1000px; margin: 0 auto; background: white; padding: 4rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-top: 6px solid #2563eb; border-radius: 8px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+        .title { font-size: 2.2rem; margin: 0 0 0.5rem 0; color: var(--primary); }
+        .status-draft { display: inline-block; background: #e0e7ff; color: #4338ca; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; font-weight: bold; border: 1px solid #c7d2fe;}
+        table { width: 100%; border-collapse: collapse; margin-top: 2rem;}
+        th, td { border: 1px solid var(--border); padding: 1rem; text-align: left; }
+        th { background: #f8fafc; color: var(--primary); font-weight: 600; position: sticky; top: 0;}
+        h2 { color: var(--primary); font-size: 1.4rem; margin-top: 0; }
+        .tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-align: center; width: 60px; }
+        .high { background: #fee2e2; color: #991b1b; }
+        .medium { background: #fef3c7; color: #92400e; }
+        .low { background: #dcfce7; color: #166534; }
+        .role { background: #e0e7ff; color: #3730a3; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 600; display: inline-block; margin-bottom: 0.5rem;}
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <div class="header">
+            <div>
+                <h1 class="title">Stakeholder Matrix</h1>
+                <div style="color: #64748b; font-size: 1.1rem;">Survey & Analysis of CLS Project Stakeholders</div>
+            </div>
+            <div>
+                <span class="status-draft">Version: v0.1</span>
+            </div>
+        </div>
+
+        <h2>Power/Interest Grid Analysis</h2>
+        <p>Mapping the involvement of individuals and departments within the center that directly impact the system's development outcomes for the 3-week MVP.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th width="20%">Stakeholder / Role</th>
+                    <th width="10%">Power</th>
+                    <th width="10%">Interest</th>
+                    <th width="30%">Objectives & Expectations</th>
+                    <th width="30%">BA Management Strategy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="role">Sponsor / Decider</span><br/>
+                        <b>Center Director</b>
+                    </td>
+                    <td><span class="tag high">High</span></td>
+                    <td><span class="tag high">High</span></td>
+                    <td>Focuses on the big picture: reducing student churn rate by 20%, securing cash flow, and enhancing brand trust with strict project timelines (3-week MVP).</td>
+                    <td><strong>Manage Closely:</strong> Provide rigorous weekly progress reports. Align closely on MVP scope priority and demonstrate automation metrics.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="role">Key User</span><br/>
+                        <b>Academic Admin (Giáo vụ)</b>
+                    </td>
+                    <td><span class="tag medium">Med</span></td>
+                    <td><span class="tag high">High</span></td>
+                    <td>Needs to reclaim 15 man-hours/week. Desires a unified database, eliminating manual spreadsheets. Requires real-time system alerts 2 weeks prior to package depletion to process renewals.</td>
+                    <td><strong>Keep Satisfied:</strong> Involve deeply in UX flows for data entry and scheduling. Ensure the transition from Excel to the system is smooth and painless.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="role">End User</span><br/>
+                        <b>Teachers</b>
+                    </td>
+                    <td><span class="tag low">Low</span></td>
+                    <td><span class="tag medium">Med</span></td>
+                    <td>Must comply with the SLA to publish academic feedback within 12 hours post-session. Needs absolutely 0 scheduling conflicts (no double booking).</td>
+                    <td><strong>Keep Informed / Satisfied:</strong> Design highly intuitive mobile-friendly interfaces for quick feedback submission. Guarantee foolproof room and schedule assignment.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="role">External User</span><br/>
+                        <b>Parents (Sponsors)</b>
+                    </td>
+                    <td><span class="tag low">Low</span></td>
+                    <td><span class="tag high">High</span></td>
+                    <td>Expects 100% automated, zero-touch communication. Needs real-time visibility into child's attendance and schedule changes via Email.</td>
+                    <td><strong>Monitor:</strong> Ensure notification systems (Email dispatches) have near 100% deliverability. Validate message clarity and formatting.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1.5rem; margin-top: 2rem;">
+            <p style="margin: 0;"><strong>📝 BA Note:</strong> Since parents rarely download native center apps, sticking to Push/Email notifications is crucial for MVP success to ensure high reachability. Additionally, maintaining zero scheduling conflicts is a strict algorithmic necessity to win Teachers' trust.</p>
+        </div>
+    </div>
+</body>
+</html>
