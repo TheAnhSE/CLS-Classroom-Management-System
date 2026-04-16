@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" modified="2026-04-16T06:50:00.000Z" agent="Antigravity" version="24.0.0">
+  <diagram id="uc-Parent_Sponsor" name="Use Case Diagram - Parent Sponsor">
+    <mxGraphModel dx="1500" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="CLS - Classroom Management System" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;verticalAlign=top;align=center;fillColor=none;strokeWidth=2;spacingTop=8;overflow=visible;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="500" height="465" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Parent&#xa;(Sponsor)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="222.5" width="40" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="Receive Attendance&#xa;Notification" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="270" y="75.0" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="5" style="endArrow=none;html=1;strokeWidth=1;strokeColor=#000000;" edge="1" source="3" target="4" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="Receive Schedule&#xa;Change Notification" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="270" y="170.0" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="7" style="endArrow=none;html=1;strokeWidth=1;strokeColor=#000000;" edge="1" source="3" target="6" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="Receive Feedback&#xa;Report" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="270" y="265.0" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="9" style="endArrow=none;html=1;strokeWidth=1;strokeColor=#000000;" edge="1" source="3" target="8" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="Receive Package&#xa;Expiry Notification" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="270" y="360.0" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="11" style="endArrow=none;html=1;strokeWidth=1;strokeColor=#000000;" edge="1" source="3" target="10" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
