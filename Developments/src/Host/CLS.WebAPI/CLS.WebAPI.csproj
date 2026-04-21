@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\Learner\CLS.Module.Learner.Presentation\CLS.Module.Learner.Presentation.csproj" />
+    <ProjectReference Include="..\..\Shared\CLS.Common\CLS.Common.csproj" />
+    <ProjectReference Include="..\..\Modules\Learner\CLS.Module.Learner.Infrastructure\CLS.Module.Learner.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

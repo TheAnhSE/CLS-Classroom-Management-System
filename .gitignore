@@ -1,0 +1,179 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options directory
+.vs/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Rider IDE
+.idea/
+*.sln.iml
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+.nuget/
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# TestResults
+TestResults/
+*.trx
+
+# OpenCover UI analysis results
+OpenCover/
+
+# Entity Framework
+*.db
+*.db-shm
+*.db-wal
+
+# Local user database instance
+local.db
+
+# Application Insights telemetry
+ApplicationInsights.config
+.applicationinsights/
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# BenchmarkDotNet files
+BenchmarkDotNet.Artifacts/
+
+# Visual Studio 6 build-related files
+*.plg
+*.opt
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# MightyMoose
+*.mm.*
+AutoTest.Net/
+
+# Web workbench (sass)
+.sass-cache/
+
+# Installshield output folder
+[Ee]xpress/
+
+# DocProject is a documentation generator add-in
+DocProject/buildhelp/
+DocProject/Help/*.HxT
+DocProject/Help/*.HxC
+DocProject/Help/*.hhc
+DocProject/Help/*.hhk
+DocProject/Help/*.hhp
+DocProject/Help/Html2
+DocProject/Help/html
+
+# Click-Once directory
+publish/
+
+# Publish Web Output
+*.[Pp]ublish.xml
+*.azurePubxml
+
+# NuGet Symbol Packages
+*.snupkg
+
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+!**/packages/build/
+*.packages/
+
+# avoid committing precompiled files
+*.dll
+*.exe
+
+# Bypass npm, bower with -g flag, or npm install version @ hash for the same reason
+node_modules/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# Fody - auto-generated type extensions
+FodyWeavers.xsd
+
+# Rider
+.idea/
+.idea_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Coverage
+coverage/
+opencoverage/
+
+# Azure Artifacts
+bin/
+obj/
+
+# AppSettings local
+appsettings.local.json
+appsettings.Development.json
+appsettings.json
+
+
+# Certificate files
+*.pfx
+*.pem
+*.key
+

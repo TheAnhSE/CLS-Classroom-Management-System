@@ -1,231 +1,245 @@
--- ======================================================================
--- CLS (Classroom Management System) - Logical Database Schema (MySQL)
--- Auto-generated from CLS_ERD_Logical_DataModel
--- ======================================================================
+CREATE DATABASE cls_db;
+GO
 
-CREATE DATABASE IF NOT EXISTS cls_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE cls_db;
+GO
 
--- 1. Roles Table
-CREATE TABLE IF NOT EXISTS roles (
-    role_id INT AUTO_INCREMENT PRIMARY KEY,
-    role_name VARCHAR(50) NOT NULL UNIQUE,
-    description VARCHAR(255),
-    is_active BOOLEAN DEFAULT TRUE
+-- 1. Roles
+CREATE TABLE roles (
+    role_id INT IDENTITY(1,1) PRIMARY KEY,
+    role_name NVARCHAR(50) NOT NULL UNIQUE,
+    description NVARCHAR(255),
+    is_active BIT DEFAULT 1
 );
 
--- 2. Users Table (Admin, Teacher, Center Director)
-CREATE TABLE IF NOT EXISTS users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    phone_number VARCHAR(20),
+-- 2. Users
+CREATE TABLE users (
+    user_id INT IDENTITY(1,1) PRIMARY KEY,
+    email NVARCHAR(100) NOT NULL UNIQUE,
+    password_hash NVARCHAR(255) NOT NULL,
+    first_name NVARCHAR(50) NOT NULL,
+    last_name NVARCHAR(50) NOT NULL,
+    phone_number NVARCHAR(20),
     date_of_birth DATE,
-    address TEXT,
+    address NVARCHAR(MAX),
     role_id INT NOT NULL,
-    is_active BOOLEAN DEFAULT TRUE,
-    avatar_url VARCHAR(255),
+    is_active BIT DEFAULT 1,
+    avatar_url NVARCHAR(255),
     created_by INT,
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_time DATETIME2 DEFAULT GETDATE(),
     updated_by INT,
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE RESTRICT
+    updated_time DATETIME2 DEFAULT GETDATE(),
+
+    CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
--- 3. Parents Table
-CREATE TABLE IF NOT EXISTS parents (
-    parent_id INT AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    phone_number VARCHAR(20) NOT NULL,
-    address TEXT,
-    relationship VARCHAR(50) NOT NULL,
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- 3. Parents
+CREATE TABLE parents (
+    parent_id INT IDENTITY(1,1) PRIMARY KEY,
+    full_name NVARCHAR(100) NOT NULL,
+    email NVARCHAR(100) NOT NULL UNIQUE,
+    phone_number NVARCHAR(20) NOT NULL,
+    address NVARCHAR(MAX),
+    relationship NVARCHAR(50) NOT NULL,
+    created_time DATETIME2 DEFAULT GETDATE(),
+    updated_time DATETIME2 DEFAULT GETDATE()
 );
 
--- 4. Learners Table
-CREATE TABLE IF NOT EXISTS learners (
-    learner_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
+-- 4. Learners
+CREATE TABLE learners (
+    learner_id INT IDENTITY(1,1) PRIMARY KEY,
+    first_name NVARCHAR(50) NOT NULL,
+    last_name NVARCHAR(50) NOT NULL,
     date_of_birth DATE,
-    gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    gender NVARCHAR(10) NOT NULL CHECK (gender IN ('Male','Female','Other')),
     parent_id INT NOT NULL,
     enrollment_date DATE NOT NULL,
-    status ENUM('Active', 'Inactive', 'Suspended') DEFAULT 'Active',
-    notes TEXT,
+    status NVARCHAR(20) DEFAULT 'Active'
+        CHECK (status IN ('Active','Inactive','Suspended')),
+    notes NVARCHAR(MAX),
     created_by INT NOT NULL,
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_learners_parent FOREIGN KEY (parent_id) REFERENCES parents(parent_id) ON DELETE CASCADE,
-    CONSTRAINT fk_learners_creator FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE RESTRICT
+    created_time DATETIME2 DEFAULT GETDATE(),
+    updated_time DATETIME2 DEFAULT GETDATE(),
+
+    FOREIGN KEY (parent_id) REFERENCES parents(parent_id) ON DELETE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES users(user_id)
 );
 
--- 5. Subjects Table
-CREATE TABLE IF NOT EXISTS subjects (
-    subject_id INT AUTO_INCREMENT PRIMARY KEY,
-    subject_name VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT,
-    is_active BOOLEAN DEFAULT TRUE
+-- 5. Subjects
+CREATE TABLE subjects (
+    subject_id INT IDENTITY(1,1) PRIMARY KEY,
+    subject_name NVARCHAR(100) NOT NULL UNIQUE,
+    description NVARCHAR(MAX),
+    is_active BIT DEFAULT 1
 );
 
--- 6. Learning Packages Master Table
-CREATE TABLE IF NOT EXISTS learning_packages (
-    package_id INT AUTO_INCREMENT PRIMARY KEY,
-    package_name VARCHAR(100) NOT NULL,
+-- 6. Learning Packages
+CREATE TABLE learning_packages (
+    package_id INT IDENTITY(1,1) PRIMARY KEY,
+    package_name NVARCHAR(100) NOT NULL,
     subject_id INT NOT NULL,
     total_sessions INT NOT NULL,
     duration_months INT NOT NULL,
-    tuition_fee DECIMAL(10, 2) NOT NULL,
-    description TEXT,
-    is_active BOOLEAN DEFAULT TRUE,
+    tuition_fee DECIMAL(10,2) NOT NULL,
+    description NVARCHAR(MAX),
+    is_active BIT DEFAULT 1,
     created_by INT NOT NULL,
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_packages_subject FOREIGN KEY (subject_id) REFERENCES subjects(subject_id) ON DELETE RESTRICT,
-    CONSTRAINT fk_packages_creator FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE RESTRICT
+    created_time DATETIME2 DEFAULT GETDATE(),
+    updated_time DATETIME2 DEFAULT GETDATE(),
+
+    FOREIGN KEY (subject_id) REFERENCES subjects(subject_id),
+    FOREIGN KEY (created_by) REFERENCES users(user_id)
 );
 
--- 7. Learner Packages (Tuition ledger mapped to students)
-CREATE TABLE IF NOT EXISTS learner_packages (
-    learner_package_id INT AUTO_INCREMENT PRIMARY KEY,
+-- 7. Learner Packages
+CREATE TABLE learner_packages (
+    learner_package_id INT IDENTITY(1,1) PRIMARY KEY,
     learner_id INT NOT NULL,
     package_id INT NOT NULL,
     assigned_date DATE NOT NULL,
     expiry_date DATE NOT NULL,
     total_sessions INT NOT NULL,
     remaining_sessions INT NOT NULL,
-    status ENUM('Active', 'Depleted', 'Expired') DEFAULT 'Active',
+    status NVARCHAR(20) DEFAULT 'Active'
+        CHECK (status IN ('Active','Depleted','Expired')),
     assigned_by INT NOT NULL,
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_lp_learner FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE CASCADE,
-    CONSTRAINT fk_lp_package FOREIGN KEY (package_id) REFERENCES learning_packages(package_id) ON DELETE RESTRICT,
-    CONSTRAINT fk_lp_assigner FOREIGN KEY (assigned_by) REFERENCES users(user_id) ON DELETE RESTRICT
+    created_time DATETIME2 DEFAULT GETDATE(),
+    updated_time DATETIME2 DEFAULT GETDATE(),
+
+    FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE CASCADE,
+    FOREIGN KEY (package_id) REFERENCES learning_packages(package_id),
+    FOREIGN KEY (assigned_by) REFERENCES users(user_id)
 );
 
--- 8. Classrooms Table
-CREATE TABLE IF NOT EXISTS classrooms (
-    classroom_id INT AUTO_INCREMENT PRIMARY KEY,
-    room_name VARCHAR(50) NOT NULL UNIQUE,
+-- 8. Classrooms
+CREATE TABLE classrooms (
+    classroom_id INT IDENTITY(1,1) PRIMARY KEY,
+    room_name NVARCHAR(50) NOT NULL UNIQUE,
     capacity INT NOT NULL,
-    location VARCHAR(100),
-    is_active BOOLEAN DEFAULT TRUE
+    location NVARCHAR(100),
+    is_active BIT DEFAULT 1
 );
 
--- 9. Sessions Table (Timetable Blocks)
-CREATE TABLE IF NOT EXISTS sessions (
-    session_id INT AUTO_INCREMENT PRIMARY KEY,
+-- 9. Sessions
+CREATE TABLE sessions (
+    session_id INT IDENTITY(1,1) PRIMARY KEY,
     subject_id INT NOT NULL,
     classroom_id INT NOT NULL,
     teacher_id INT NOT NULL,
     session_date DATE NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
-    status ENUM('Scheduled', 'Ongoing', 'Completed', 'Cancelled') DEFAULT 'Scheduled',
-    notes TEXT,
+    status NVARCHAR(20) DEFAULT 'Scheduled'
+        CHECK (status IN ('Scheduled','Ongoing','Completed','Cancelled')),
+    notes NVARCHAR(MAX),
     created_by INT NOT NULL,
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_sessions_subject FOREIGN KEY (subject_id) REFERENCES subjects(subject_id) ON DELETE RESTRICT,
-    CONSTRAINT fk_sessions_room FOREIGN KEY (classroom_id) REFERENCES classrooms(classroom_id) ON DELETE RESTRICT,
-    CONSTRAINT fk_sessions_teacher FOREIGN KEY (teacher_id) REFERENCES users(user_id) ON DELETE RESTRICT,
-    CONSTRAINT fk_sessions_creator FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE RESTRICT
+    created_time DATETIME2 DEFAULT GETDATE(),
+    updated_time DATETIME2 DEFAULT GETDATE(),
+
+    FOREIGN KEY (subject_id) REFERENCES subjects(subject_id),
+    FOREIGN KEY (classroom_id) REFERENCES classrooms(classroom_id),
+    FOREIGN KEY (teacher_id) REFERENCES users(user_id),
+    FOREIGN KEY (created_by) REFERENCES users(user_id)
 );
 
--- 10. Session Learners (Mapping Learners to scheduled Sessions)
-CREATE TABLE IF NOT EXISTS session_learners (
-    session_learner_id INT AUTO_INCREMENT PRIMARY KEY,
+-- 10. Session Learners
+CREATE TABLE session_learners (
+    session_learner_id INT IDENTITY(1,1) PRIMARY KEY,
     session_id INT NOT NULL,
     learner_id INT NOT NULL,
-    CONSTRAINT fk_sl_session FOREIGN KEY (session_id) REFERENCES sessions(session_id) ON DELETE CASCADE,
-    CONSTRAINT fk_sl_learner FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE CASCADE,
-    UNIQUE KEY unique_session_learner (session_id, learner_id)
+
+    FOREIGN KEY (session_id) REFERENCES sessions(session_id) ON DELETE CASCADE,
+    FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE CASCADE,
+    CONSTRAINT unique_session_learner UNIQUE (session_id, learner_id)
 );
 
--- 11. Attendance Table
-CREATE TABLE IF NOT EXISTS attendance (
-    attendance_id INT AUTO_INCREMENT PRIMARY KEY,
+-- 11. Attendance
+CREATE TABLE attendance (
+    attendance_id INT IDENTITY(1,1) PRIMARY KEY,
     session_id INT NOT NULL,
     learner_id INT NOT NULL,
-    status ENUM('Present', 'Absent', 'Late') NOT NULL,
+    status NVARCHAR(10) NOT NULL
+        CHECK (status IN ('Present','Absent','Late')),
     recorded_by INT NOT NULL,
-    recorded_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    notes VARCHAR(255),
-    CONSTRAINT fk_att_session FOREIGN KEY (session_id) REFERENCES sessions(session_id) ON DELETE CASCADE,
-    CONSTRAINT fk_att_learner FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE CASCADE,
-    CONSTRAINT fk_att_recorder FOREIGN KEY (recorded_by) REFERENCES users(user_id) ON DELETE RESTRICT,
-    UNIQUE KEY unique_att_log (session_id, learner_id)
+    recorded_time DATETIME2 DEFAULT GETDATE(),
+    notes NVARCHAR(255),
+
+    FOREIGN KEY (session_id) REFERENCES sessions(session_id) ON DELETE CASCADE,
+    FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE CASCADE,
+    FOREIGN KEY (recorded_by) REFERENCES users(user_id),
+    CONSTRAINT unique_att_log UNIQUE (session_id, learner_id)
 );
 
--- 12. Feedback (Academic SLA module)
-CREATE TABLE IF NOT EXISTS feedback (
-    feedback_id INT AUTO_INCREMENT PRIMARY KEY,
+-- 12. Feedback
+CREATE TABLE feedback (
+    feedback_id INT IDENTITY(1,1) PRIMARY KEY,
     session_id INT NOT NULL,
     learner_id INT NOT NULL,
     teacher_id INT NOT NULL,
     performance_rating INT CHECK (performance_rating BETWEEN 1 AND 5),
-    behavioral_notes TEXT,
-    recommendations TEXT,
-    submitted_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    sla_deadline DATETIME NOT NULL,
-    is_on_time BOOLEAN NOT NULL,
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_fb_session FOREIGN KEY (session_id) REFERENCES sessions(session_id) ON DELETE CASCADE,
-    CONSTRAINT fk_fb_learner FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE CASCADE,
-    CONSTRAINT fk_fb_teacher FOREIGN KEY (teacher_id) REFERENCES users(user_id) ON DELETE RESTRICT,
-    UNIQUE KEY unique_feedback (session_id, learner_id)
+    behavioral_notes NVARCHAR(MAX),
+    recommendations NVARCHAR(MAX),
+    submitted_time DATETIME2 DEFAULT GETDATE(),
+    sla_deadline DATETIME2 NOT NULL,
+    is_on_time BIT NOT NULL,
+    created_time DATETIME2 DEFAULT GETDATE(),
+
+    FOREIGN KEY (session_id) REFERENCES sessions(session_id) ON DELETE CASCADE,
+    FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE CASCADE,
+    FOREIGN KEY (teacher_id) REFERENCES users(user_id),
+    CONSTRAINT unique_feedback UNIQUE (session_id, learner_id)
 );
 
--- 13. Notifications Table
-CREATE TABLE IF NOT EXISTS notifications (
-    notification_id INT AUTO_INCREMENT PRIMARY KEY,
-    type ENUM('Attendance_Alert', 'Feedback_Alert', 'Package_Warning', 'Schedule_Change') NOT NULL,
-    recipient_email VARCHAR(100) NOT NULL,
+-- 13. Notifications
+CREATE TABLE notifications (
+    notification_id INT IDENTITY(1,1) PRIMARY KEY,
+    type NVARCHAR(50) NOT NULL
+        CHECK (type IN ('Attendance_Alert','Feedback_Alert','Package_Warning','Schedule_Change')),
+    recipient_email NVARCHAR(100) NOT NULL,
     parent_id INT NOT NULL,
     learner_id INT,
-    subject VARCHAR(255) NOT NULL,
-    body TEXT NOT NULL,
-    status ENUM('Pending', 'Sent', 'Failed') DEFAULT 'Pending',
-    sent_time DATETIME,
-    delivery_status VARCHAR(50),
-    external_message_id VARCHAR(100),
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_notif_parent FOREIGN KEY (parent_id) REFERENCES parents(parent_id) ON DELETE CASCADE,
-    CONSTRAINT fk_notif_learner FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE SET NULL
+    subject NVARCHAR(255) NOT NULL,
+    body NVARCHAR(MAX) NOT NULL,
+    status NVARCHAR(20) DEFAULT 'Pending'
+        CHECK (status IN ('Pending','Sent','Failed')),
+    sent_time DATETIME2,
+    delivery_status NVARCHAR(50),
+    external_message_id NVARCHAR(100),
+    created_time DATETIME2 DEFAULT GETDATE(),
+
+    FOREIGN KEY (parent_id) REFERENCES parents(parent_id) ON DELETE CASCADE,
+    FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE SET NULL
 );
 
--- 14. Settings Table (Master config)
-CREATE TABLE IF NOT EXISTS settings (
-    setting_id INT AUTO_INCREMENT PRIMARY KEY,
-    setting_name VARCHAR(100) NOT NULL UNIQUE,
-    setting_type VARCHAR(50) NOT NULL,
-    setting_value VARCHAR(255) NOT NULL,
+-- 14. Settings
+CREATE TABLE settings (
+    setting_id INT IDENTITY(1,1) PRIMARY KEY,
+    setting_name NVARCHAR(100) NOT NULL UNIQUE,
+    setting_type NVARCHAR(50) NOT NULL,
+    setting_value NVARCHAR(255) NOT NULL,
     priority INT DEFAULT 0,
-    description TEXT,
-    is_active BOOLEAN DEFAULT TRUE,
+    description NVARCHAR(MAX),
+    is_active BIT DEFAULT 1,
     created_by INT,
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    created_time DATETIME2 DEFAULT GETDATE(),
+    updated_time DATETIME2 DEFAULT GETDATE()
 );
 
--- 15. Activity Log (Audit trailing)
-CREATE TABLE IF NOT EXISTS activity_log (
-    log_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+-- 15. Activity Log
+CREATE TABLE activity_log (
+    log_id BIGINT IDENTITY(1,1) PRIMARY KEY,
     user_id INT NOT NULL,
-    action VARCHAR(100) NOT NULL,
-    entity_type VARCHAR(50) NOT NULL,
+    action NVARCHAR(100) NOT NULL,
+    entity_type NVARCHAR(50) NOT NULL,
     entity_id INT NOT NULL,
-    details JSON,
-    ip_address VARCHAR(45),
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_log_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE RESTRICT
+    details NVARCHAR(MAX),
+    ip_address NVARCHAR(45),
+    created_time DATETIME2 DEFAULT GETDATE(),
+
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
--- Create specific Indexes for Performance
+-- Indexes
 CREATE INDEX idx_sessions_time ON sessions(session_date, start_time, end_time);
 CREATE INDEX idx_learner_pkg_status ON learner_packages(status);
 CREATE INDEX idx_feedback_sla ON feedback(is_on_time);

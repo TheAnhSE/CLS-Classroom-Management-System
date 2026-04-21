@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: CLS Classroom Management System API
+  version: "1.0.0"
+  description: "API Contract for the CLS Classroom Management System, following defined API design rules."
+
+servers:
+  - url: "http://localhost:8080"
+    description: "Development Server"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    # ---------------------------
+    # Standard Response Wrappers
+    # ---------------------------
+    StandardResponse_AuthToken:
+      type: object
+      properties:
+        code: 
+          type: integer
+          example: 200
+        message: 
+          type: string
+          example: "Login successful"
+        data:
+          $ref: '#/components/schemas/AuthToken'
+          
+    StandardResponse_UserProfile:
+      type: object
+      properties:
+        code: 
+          type: integer
+          example: 200
+        message: 
+          type: string
+          example: "Success"
+        data:
+          $ref: '#/components/schemas/UserProfile'
+          
+    StandardResponse_ClassroomList:
+      type: object
+      properties:
+        code: 
+          type: integer
+          example: 200
+        message: 
+          type: string
+          example: "Success"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Classroom'
+
+    StandardResponse_Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "Error message details"
+        data:
+          type: object
+          nullable: true
+
+    # ---------------------------
+    # Domain Models
+    # ---------------------------
+    AuthToken:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        expiresIn:
+          type: integer
+          example: 3600
+
+    UserProfile:
+      type: object
+      description: "User profile information. Adheres to sensitive-data-protection rule: no password is included."
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        email:
+          type: string
+          format: email
+          example: "student@cls.edu.vn"
+        fullName:
+          type: string
+          example: "Nguyen Van A"
+        role:
+          type: string
+          enum: [ADMIN, TEACHER, STUDENT]
+          example: "STUDENT"
+
+    Classroom:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Software Architecture 101"
+        semester:
+          type: string
+          example: "SP2026"
+        createdAt:
+          type: string
+          format: date-time
+
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: "User Login"
+      tags:
+        - Authentication
+      # Open route, so no security block here
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: 
+                  type: string
+                  format: email
+                password: 
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: "Login successful"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponse_AuthToken'
+        '401':
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponse_Error'
+
+  /api/v1/user-profiles/me:
+    get:
+      summary: "Get Current User Profile"
+      tags:
+        - User Profiles
+      security:
+        - bearerAuth: [] # Required JWT authentication
+      responses:
+        '200':
+          description: "Successfully retrieved profile"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponse_UserProfile'
+        '401':
+          description: "Unauthorized - Invalid or missing token"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponse_Error'
+
+  /api/v1/classrooms:
+    get:
+      summary: "List Available Classrooms"
+      tags:
+        - Classrooms
+      security:
+        - bearerAuth: [] # Required JWT authentication
+      responses:
+        '200':
+          description: "Successfully retrieved list of classrooms"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponse_ClassroomList'
