@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1440"/>
+<title>CLS – Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;width:1440px;min-height:900px;display:flex;}
+.sidebar{width:240px;background:#0f172a;min-height:100vh;padding:24px 0;flex-shrink:0;}
+.logo{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.1);}
+.logo-name{color:#fff;font-size:17px;font-weight:700;}
+.logo-sub{color:#64748b;font-size:11px;margin-top:2px;}
+.nav-section{padding:16px 12px 8px;font-size:10px;color:#475569;letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;color:#94a3b8;font-size:13px;cursor:pointer;border-radius:8px;margin:2px 8px;}
+.nav-item.active{background:rgba(59,130,246,.15);color:#60a5fa;font-weight:600;}
+.main{flex:1;display:flex;flex-direction:column;}
+.topbar{background:#fff;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e2e8f0;}
+.page-title{font-size:18px;font-weight:700;color:#0f172a;}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;}
+.content{padding:24px 28px;flex:1;}
+.greeting h1{font-size:21px;font-weight:700;color:#0f172a;margin-bottom:4px;}
+.greeting p{color:#64748b;font-size:13px;margin-bottom:24px;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
+.kpi-card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.kpi-icon{font-size:22px;margin-bottom:10px;}
+.kpi-value{font-size:28px;font-weight:700;color:#0f172a;}
+.kpi-label{font-size:12px;color:#64748b;margin-top:4px;}
+.kpi-change{font-size:11px;font-weight:500;margin-top:6px;}
+.alert-banner{background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #fbbf24;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.alert-count{margin-left:auto;background:#f59e0b;color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.bottom-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;}
+.card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.card-title{font-size:14px;font-weight:700;color:#0f172a;}
+.card-action{font-size:12px;color:#2563eb;cursor:pointer;font-weight:500;}
+.session-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+.session-time{background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:600;padding:4px 8px;border-radius:6px;white-space:nowrap;}
+.session-info{flex:1;}
+.session-name{font-size:13px;font-weight:600;color:#0f172a;}
+.session-meta{font-size:11px;color:#94a3b8;margin-top:2px;}
+.s-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;}
+.s-ongoing{background:#dcfce7;color:#16a34a;}
+.s-upcoming{background:#eff6ff;color:#1d4ed8;}
+.alert-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+.alert-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.alert-msg{font-size:12px;color:#374151;}
+.alert-time{font-size:11px;color:#9ca3af;margin-top:2px;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo"><div class="logo-name">🏫 CLS System</div><div class="logo-sub">Academic Admin Portal</div></div>
+  <div class="nav-section">Main</div>
+  <div class="nav-item active">📊 Dashboard</div>
+  <div class="nav-item">👥 Học viên</div>
+  <div class="nav-item">📦 Gói học phí</div>
+  <div class="nav-item">📅 Lịch học</div>
+  <div class="nav-item">✅ Điểm danh</div>
+  <div class="nav-item">📝 Feedback</div>
+  <div class="nav-section">Reports</div>
+  <div class="nav-item">📈 Báo cáo</div>
+  <div class="nav-section">Admin</div>
+  <div class="nav-item">👤 Tài khoản</div>
+  <div class="nav-item">⚙️ Cài đặt</div>
+</div>
+<div class="main">
+  <div class="topbar">
+    <div class="page-title">Dashboard Tổng quan</div>
+    <div class="topbar-right">
+      <span style="font-size:20px;">🔔</span>
+      <div class="avatar">AA</div>
+      <span style="font-size:13px;color:#374151;font-weight:500;">Nguyễn Giáo Vụ</span>
+    </div>
+  </div>
+  <div class="content">
+    <div class="greeting">
+      <h1>Chào buổi chiều, Giáo Vụ! 👋</h1>
+      <p>Hôm nay: Thứ 4, 23/04/2026 — 5 buổi học đang diễn ra</p>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon">👥</div><div class="kpi-value">127</div><div class="kpi-label">Học viên đang học</div><div class="kpi-change" style="color:#10b981;">↑ +3 tuần này</div></div>
+      <div class="kpi-card"><div class="kpi-icon">📅</div><div class="kpi-value">8</div><div class="kpi-label">Buổi học hôm nay</div><div class="kpi-change" style="color:#64748b;">5 đang chạy · 3 sắp tới</div></div>
+      <div class="kpi-card"><div class="kpi-icon">⚠️</div><div class="kpi-value">12</div><div class="kpi-label">Gói học sắp hết (14 ngày)</div><div class="kpi-change" style="color:#ef4444;">↑ Cần liên hệ gia hạn</div></div>
+      <div class="kpi-card"><div class="kpi-icon">🕐</div><div class="kpi-value">3</div><div class="kpi-label">Feedback quá hạn SLA</div><div class="kpi-change" style="color:#ef4444;">↑ Vượt 12h deadline</div></div>
+    </div>
+    <div class="alert-banner">
+      <span style="font-size:18px;">⚠️</span>
+      <span style="font-size:13px;color:#92400e;font-weight:500;"><strong>Cảnh báo:</strong> 12 học viên sẽ hết Learning Package trong 14 ngày — liên hệ gia hạn ngay!</span>
+      <div class="alert-count">12 HV</div>
+    </div>
+    <div class="bottom-grid">
+      <div class="card">
+        <div class="card-header"><div class="card-title">📅 Lịch học hôm nay</div><div class="card-action">Xem toàn bộ →</div></div>
+        <div class="session-item"><div class="session-time">08:00–09:30</div><div class="session-info"><div class="session-name">Tiếng Anh – Lớp A1</div><div class="session-meta">GV: Nguyễn Văn A · Phòng 101 · 15 HV</div></div><div class="s-badge s-ongoing">Đang học</div></div>
+        <div class="session-item"><div class="session-time">09:45–11:15</div><div class="session-info"><div class="session-name">Kids Coding – Python Cơ bản</div><div class="session-meta">GV: Trần Thị B · Phòng 102 · 10 HV</div></div><div class="s-badge s-upcoming">Sắp tới</div></div>
+        <div class="session-item"><div class="session-time">14:00–15:30</div><div class="session-info"><div class="session-name">Tiếng Anh – IELTS Prep</div><div class="session-meta">GV: Lê Văn C · Phòng 103 · 8 HV</div></div><div class="s-badge s-upcoming">Sắp tới</div></div>
+        <div class="session-item"><div class="session-time">15:45–17:15</div><div class="session-info"><div class="session-name">Tiếng Anh – Giao tiếp B2</div><div class="session-meta">GV: Phạm Thị D · Phòng 101 · 12 HV</div></div><div class="s-badge s-upcoming">Sắp tới</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🔔 Cảnh báo hệ thống</div><div class="card-action">Xem tất cả</div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#ef4444;"></div><div><div class="alert-msg"><strong>SLA vi phạm:</strong> GV Nguyễn Văn A chưa nộp feedback lớp A1.</div><div class="alert-time">2 giờ trước</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#f59e0b;"></div><div><div class="alert-msg"><strong>Gói sắp hết:</strong> HV Minh Anh còn 2 buổi – Python.</div><div class="alert-time">5 giờ trước</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#3b82f6;"></div><div><div class="alert-msg"><strong>Điểm danh chưa ghi:</strong> Lớp IELTS 22/04.</div><div class="alert-time">1 ngày trước</div></div></div>
+        <div class="alert-item"><div class="alert-dot" style="background:#f59e0b;"></div><div><div class="alert-msg"><strong>Gói sắp hết:</strong> HV Tuấn Kiệt còn 3 buổi – B2.</div><div class="alert-time">1 ngày trước</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

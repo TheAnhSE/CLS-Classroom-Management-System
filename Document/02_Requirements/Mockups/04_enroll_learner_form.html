@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1440"/>
+<title>CLS – Enroll Learner Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;width:1440px;min-height:900px;display:flex;}
+.sidebar{width:240px;background:#0f172a;min-height:100vh;padding:24px 0;flex-shrink:0;}
+.logo{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.1);}
+.logo-name{color:#fff;font-size:17px;font-weight:700;}
+.logo-sub{color:#64748b;font-size:11px;margin-top:2px;}
+.nav-section{padding:16px 12px 8px;font-size:10px;color:#475569;letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;color:#94a3b8;font-size:13px;cursor:pointer;border-radius:8px;margin:2px 8px;}
+.nav-item.active{background:rgba(59,130,246,.15);color:#60a5fa;font-weight:600;}
+.main{flex:1;display:flex;flex-direction:column;}
+.topbar{background:#fff;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e2e8f0;}
+.page-title{font-size:18px;font-weight:700;color:#0f172a;}
+.avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;}
+.content{padding:24px 28px;flex:1;}
+.form-layout{display:grid;grid-template-columns:1fr 360px;gap:24px;}
+.form-card{background:#fff;border-radius:14px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.section-title{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:8px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{margin-bottom:0;}
+.form-group.full{grid-column:1/-1;}
+.form-label{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:6px;}
+.required{color:#ef4444;}
+.form-input,.form-select{width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;color:#0f172a;font-family:'Inter',sans-serif;background:#f9fafb;}
+.form-input:focus,.form-select:focus{outline:none;border-color:#2563eb;background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+.input-hint{font-size:11px;color:#94a3b8;margin-top:4px;}
+.error-msg{font-size:11px;color:#ef4444;margin-top:4px;}
+.divider{border:none;border-top:1px solid #f1f5f9;margin:20px 0;}
+.right-panel{}
+.preview-card{background:linear-gradient(135deg,#1e3a5f,#1d4ed8);border-radius:14px;padding:24px;color:#fff;margin-bottom:16px;}
+.preview-title{font-size:12px;color:#93c5fd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;font-weight:600;}
+.preview-avatar{width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;margin:0 auto 16px;}
+.preview-name{font-size:18px;font-weight:700;text-align:center;}
+.preview-sub{font-size:12px;color:#93c5fd;text-align:center;margin-top:4px;}
+.preview-fields{margin-top:16px;}
+.preview-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:12px;}
+.preview-row .label{color:#93c5fd;}
+.preview-row .val{font-weight:500;}
+.pkg-card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.pkg-option{border:2px solid #e2e8f0;border-radius:10px;padding:14px;cursor:pointer;margin-bottom:10px;}
+.pkg-option.selected{border-color:#2563eb;background:#eff6ff;}
+.pkg-name{font-size:13px;font-weight:700;color:#0f172a;}
+.pkg-meta{font-size:11px;color:#64748b;margin-top:4px;}
+.pkg-price{font-size:15px;font-weight:700;color:#2563eb;margin-top:8px;}
+.btn-row{display:flex;gap:10px;margin-top:20px;}
+.btn-primary{flex:1;padding:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-secondary{flex:1;padding:12px;background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-weight:500;color:#374151;cursor:pointer;font-family:'Inter',sans-serif;}
+.steps{display:flex;gap:0;margin-bottom:24px;}
+.step{flex:1;display:flex;align-items:center;position:relative;}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.step-label{font-size:12px;font-weight:500;margin-left:8px;}
+.step-line{flex:1;height:2px;margin:0 8px;}
+.step.done .step-circle{background:#10b981;color:#fff;}
+.step.done .step-line{background:#10b981;}
+.step.active .step-circle{background:#2563eb;color:#fff;}
+.step.active .step-label{color:#2563eb;font-weight:600;}
+.step.active .step-line{background:#e2e8f0;}
+.step.idle .step-circle{background:#e2e8f0;color:#94a3b8;}
+.step.idle .step-label{color:#94a3b8;}
+.step.idle .step-line{background:#e2e8f0;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo"><div class="logo-name">🏫 CLS System</div><div class="logo-sub">Academic Admin Portal</div></div>
+  <div class="nav-section">Main</div>
+  <div class="nav-item">📊 Dashboard</div>
+  <div class="nav-item active">👥 Học viên</div>
+  <div class="nav-item">📦 Gói học phí</div>
+  <div class="nav-item">📅 Lịch học</div>
+  <div class="nav-item">✅ Điểm danh</div>
+  <div class="nav-item">📝 Feedback</div>
+  <div class="nav-section">Reports</div>
+  <div class="nav-item">📈 Báo cáo</div>
+  <div class="nav-section">Admin</div>
+  <div class="nav-item">⚙️ Cài đặt</div>
+</div>
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:13px;color:#64748b;">Học viên</span>
+      <span style="color:#94a3b8;">›</span>
+      <div class="page-title">Đăng ký Học viên mới</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:20px;">🔔</span><div class="avatar">AA</div></div>
+  </div>
+  <div class="content">
+    <div class="steps">
+      <div class="step done"><div class="step-circle">✓</div><div class="step-label">Thông tin cá nhân</div><div class="step-line"></div></div>
+      <div class="step active"><div class="step-circle">2</div><div class="step-label">Thông tin phụ huynh</div><div class="step-line"></div></div>
+      <div class="step idle"><div class="step-circle">3</div><div class="step-label">Gán gói học phí</div><div class="step-line"></div></div>
+      <div class="step idle"><div class="step-circle">4</div><div class="step-label">Xác nhận</div></div>
+    </div>
+    <div class="form-layout">
+      <div>
+        <div class="form-card" style="margin-bottom:16px;">
+          <div class="section-title">👤 Thông tin Học viên</div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Họ và tên <span class="required">*</span></label><input class="form-input" value="Nguyễn Minh Anh" type="text"/></div>
+            <div class="form-group"><label class="form-label">Ngày sinh <span class="required">*</span></label><input class="form-input" value="2015-06-12" type="date"/></div>
+            <div class="form-group"><label class="form-label">Giới tính</label><select class="form-select"><option selected>Nam</option><option>Nữ</option><option>Khác</option></select></div>
+            <div class="form-group"><label class="form-label">Môn học quan tâm</label><select class="form-select"><option selected>Tiếng Anh</option><option>Kids Coding</option><option>Cả hai</option></select></div>
+            <div class="form-group full"><label class="form-label">Địa chỉ</label><input class="form-input" value="123 Nguyễn Trãi, P.2, Q.5, TP.HCM" type="text"/></div>
+          </div>
+        </div>
+        <div class="form-card">
+          <div class="section-title">👨‍👩‍👧 Thông tin Phụ huynh (Sponsor) <span style="font-size:11px;color:#64748b;font-weight:400;">— Người chi trả học phí</span></div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Họ tên phụ huynh <span class="required">*</span></label><input class="form-input" value="Nguyễn Thị Hoa" type="text"/></div>
+            <div class="form-group"><label class="form-label">Quan hệ</label><select class="form-select"><option selected>Mẹ</option><option>Bố</option><option>Người giám hộ</option></select></div>
+            <div class="form-group"><label class="form-label">Email phụ huynh <span class="required">*</span></label>
+              <input class="form-input" value="nthoa@gmail.com" type="email" style="border-color:#10b981;"/>
+              <div class="input-hint" style="color:#10b981;">✓ Email hợp lệ — sẽ nhận Notification tự động</div>
+            </div>
+            <div class="form-group"><label class="form-label">Số điện thoại <span class="required">*</span></label><input class="form-input" value="0901 234 567" type="tel"/></div>
+          </div>
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:12px;color:#1e40af;">
+            ℹ️ Email này sẽ nhận tự động: Attendance Notification, Schedule Change, Feedback Report, Package Expiry Alert.
+          </div>
+        </div>
+      </div>
+      <div class="right-panel">
+        <div class="preview-card">
+          <div class="preview-title">👀 Xem trước hồ sơ</div>
+          <div class="preview-avatar">MA</div>
+          <div class="preview-name">Nguyễn Minh Anh</div>
+          <div class="preview-sub">12/06/2015 · Nam · Tiếng Anh</div>
+          <div class="preview-fields">
+            <div class="preview-row"><span class="label">Phụ huynh</span><span class="val">Nguyễn Thị Hoa</span></div>
+            <div class="preview-row"><span class="label">Email PH</span><span class="val">nthoa@gmail.com</span></div>
+            <div class="preview-row"><span class="label">SĐT</span><span class="val">0901 234 567</span></div>
+            <div class="preview-row"><span class="label">Trạng thái</span><span class="val">🟢 Mới đăng ký</span></div>
+          </div>
+        </div>
+        <div class="pkg-card">
+          <div class="section-title" style="font-size:13px;">📦 Chọn gói học phí</div>
+          <div class="pkg-option selected">
+            <div class="pkg-name">English Pro</div>
+            <div class="pkg-meta">40 buổi · Tiếng Anh · ~6 tháng</div>
+            <div class="pkg-price">4,000,000 ₫</div>
+          </div>
+          <div class="pkg-option">
+            <div class="pkg-name">IELTS Intensive</div>
+            <div class="pkg-meta">60 buổi · Tiếng Anh · ~9 tháng</div>
+            <div class="pkg-price">5,500,000 ₫</div>
+          </div>
+          <div class="pkg-option">
+            <div class="pkg-name">Coding Starter</div>
+            <div class="pkg-meta">20 buổi · Kids Coding · ~3 tháng</div>
+            <div class="pkg-price">2,500,000 ₫</div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-secondary">← Quay lại</button>
+          <button class="btn-primary">Tiếp theo →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

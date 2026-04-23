@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1440"/>
+<title>CLS – Attendance Tracking</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;width:1440px;min-height:900px;display:flex;}
+.sidebar{width:240px;background:#0f172a;min-height:100vh;padding:24px 0;flex-shrink:0;}
+.logo{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.1);}
+.logo-name{color:#fff;font-size:17px;font-weight:700;}
+.logo-sub{color:#64748b;font-size:11px;margin-top:2px;}
+.nav-section{padding:16px 12px 8px;font-size:10px;color:#475569;letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;color:#94a3b8;font-size:13px;cursor:pointer;border-radius:8px;margin:2px 8px;}
+.nav-item.active{background:rgba(59,130,246,.15);color:#60a5fa;font-weight:600;}
+.main{flex:1;display:flex;flex-direction:column;}
+.topbar{background:#fff;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e2e8f0;}
+.page-title{font-size:18px;font-weight:700;color:#0f172a;}
+.avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;}
+.content{padding:20px 28px;flex:1;}
+.session-header{background:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.session-info{display:flex;align-items:center;gap:20px;}
+.session-badge{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;padding:8px 16px;border-radius:10px;font-size:12px;font-weight:700;}
+.session-detail{}
+.session-name{font-size:16px;font-weight:700;color:#0f172a;}
+.session-meta{font-size:13px;color:#64748b;margin-top:4px;display:flex;gap:16px;}
+.meta-item{display:flex;align-items:center;gap:4px;}
+.stat-pills{display:flex;gap:10px;}
+.stat-pill{background:#f8fafc;border-radius:10px;padding:10px 16px;text-align:center;border:1.5px solid #e2e8f0;}
+.stat-num{font-size:20px;font-weight:700;}
+.stat-label{font-size:11px;color:#64748b;margin-top:2px;}
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.filter-select{padding:9px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;color:#374151;font-family:'Inter',sans-serif;background:#fff;}
+.btn-save{padding:9px 20px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;margin-left:auto;}
+.att-card{background:#fff;border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+thead{background:#f8fafc;}
+th{padding:12px 16px;text-align:left;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid #e2e8f0;}
+td{padding:12px 16px;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+.learner-cell{display:flex;align-items:center;gap:10px;}
+.l-avatar{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;}
+.l-name{font-size:13px;font-weight:600;color:#0f172a;}
+.l-pkg{font-size:11px;color:#94a3b8;margin-top:2px;}
+.att-toggle{display:flex;gap:6px;}
+.att-btn{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;border:2px solid transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;}
+.att-present{background:#dcfce7;color:#16a34a;border-color:#86efac;}
+.att-absent{background:#fef2f2;color:#dc2626;border-color:#fca5a5;}
+.att-late{background:#fef3c7;color:#92400e;border-color:#fcd34d;}
+.att-btn-idle{background:#f1f5f9;color:#94a3b8;border-color:#e2e8f0;}
+.pkg-remaining{font-size:12px;font-weight:600;}
+.pkg-warn{color:#ef4444;}
+.pkg-ok{color:#10b981;}
+.note-input{width:100%;padding:6px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:12px;font-family:'Inter',sans-serif;color:#374151;background:#f9fafb;}
+.info-banner{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#1e40af;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo"><div class="logo-name">🏫 CLS System</div><div class="logo-sub">Academic Admin Portal</div></div>
+  <div class="nav-section">Main</div>
+  <div class="nav-item">📊 Dashboard</div>
+  <div class="nav-item">👥 Học viên</div>
+  <div class="nav-item">📦 Gói học phí</div>
+  <div class="nav-item">📅 Lịch học</div>
+  <div class="nav-item active">✅ Điểm danh</div>
+  <div class="nav-item">📝 Feedback</div>
+  <div class="nav-section">Reports</div>
+  <div class="nav-item">📈 Báo cáo</div>
+  <div class="nav-section">Admin</div>
+  <div class="nav-item">⚙️ Cài đặt</div>
+</div>
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:13px;color:#64748b;">Điểm danh</span>
+      <span style="color:#94a3b8;">›</span>
+      <div class="page-title">Ghi nhận Điểm danh</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:20px;">🔔</span><div class="avatar">AA</div></div>
+  </div>
+  <div class="content">
+    <div class="session-header">
+      <div class="session-info">
+        <div class="session-badge">📅 23/04/2026</div>
+        <div class="session-detail">
+          <div class="session-name">Tiếng Anh – Lớp A1</div>
+          <div class="session-meta">
+            <div class="meta-item">🕗 08:00 – 09:30</div>
+            <div class="meta-item">📍 Phòng 101</div>
+            <div class="meta-item">👨‍🏫 GV: Nguyễn Văn A</div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-pills">
+        <div class="stat-pill"><div class="stat-num" style="color:#10b981;">8</div><div class="stat-label">Có mặt</div></div>
+        <div class="stat-pill"><div class="stat-num" style="color:#ef4444;">2</div><div class="stat-label">Vắng mặt</div></div>
+        <div class="stat-pill"><div class="stat-num" style="color:#f59e0b;">1</div><div class="stat-label">Đi trễ</div></div>
+        <div class="stat-pill"><div class="stat-num" style="color:#94a3b8;">4</div><div class="stat-label">Chưa ghi</div></div>
+      </div>
+    </div>
+    <div class="info-banner">
+      ℹ️ Khi nhấn <strong>"Lưu điểm danh"</strong>, hệ thống sẽ tự động: (1) Trừ 1 buổi từ Learning Package của HV có mặt; (2) Gửi Email Attendance Notification tới Phụ huynh (UC-19).
+    </div>
+    <div class="toolbar">
+      <select class="filter-select"><option>Tất cả trạng thái</option><option>Chưa ghi</option><option>Có mặt</option><option>Vắng mặt</option></select>
+      <button style="padding:9px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;background:#fff;cursor:pointer;font-family:'Inter',sans-serif;">✅ Điểm danh tất cả có mặt</button>
+      <button class="btn-save" style="margin-left:auto;">💾 Lưu điểm danh & Gửi thông báo</button>
+    </div>
+    <div class="att-card">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Học viên</th><th>Gói học phí / Còn lại</th><th>Trạng thái điểm danh</th><th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#94a3b8;font-size:12px;">01</td>
+            <td><div class="learner-cell"><div class="l-avatar" style="background:#6366f1;">MA</div><div><div class="l-name">Nguyễn Minh Anh</div><div class="l-pkg">#LRN-001</div></div></div></td>
+            <td><div>English Pro</div><div class="pkg-remaining pkg-warn">⚠️ Còn 2 buổi</div></td>
+            <td><div class="att-toggle"><button class="att-btn att-present">✅ Có mặt</button><button class="att-btn att-btn-idle">❌ Vắng</button><button class="att-btn att-btn-idle">🕐 Trễ</button></div></td>
+            <td><input class="note-input" placeholder="Ghi chú..." type="text"/></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;font-size:12px;">02</td>
+            <td><div class="learner-cell"><div class="l-avatar" style="background:#0ea5e9;">TK</div><div><div class="l-name">Trần Tuấn Kiệt</div><div class="l-pkg">#LRN-002</div></div></div></td>
+            <td><div>English Pro</div><div class="pkg-remaining pkg-ok">✅ Còn 18 buổi</div></td>
+            <td><div class="att-toggle"><button class="att-btn att-btn-idle">✅ Có mặt</button><button class="att-btn att-absent">❌ Vắng</button><button class="att-btn att-btn-idle">🕐 Trễ</button></div></td>
+            <td><input class="note-input" placeholder="Ghi chú..." type="text" value="Bệnh, có xin phép"/></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;font-size:12px;">03</td>
+            <td><div class="learner-cell"><div class="l-avatar" style="background:#10b981;">LP</div><div><div class="l-name">Lê Phương Linh</div><div class="l-pkg">#LRN-003</div></div></div></td>
+            <td><div>IELTS Intensive</div><div class="pkg-remaining pkg-ok">✅ Còn 48 buổi</div></td>
+            <td><div class="att-toggle"><button class="att-btn att-btn-idle">✅ Có mặt</button><button class="att-btn att-btn-idle">❌ Vắng</button><button class="att-btn att-late">🕐 Trễ</button></div></td>
+            <td><input class="note-input" placeholder="Ghi chú..." type="text" value="Đến trễ 10 phút"/></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;font-size:12px;">04</td>
+            <td><div class="learner-cell"><div class="l-avatar" style="background:#f59e0b;">PH</div><div><div class="l-name">Phạm Hữu Nghĩa</div><div class="l-pkg">#LRN-004</div></div></div></td>
+            <td><div>English Pro</div><div class="pkg-remaining pkg-warn">⚠️ Còn 3 buổi</div></td>
+            <td><div class="att-toggle"><button class="att-btn att-present">✅ Có mặt</button><button class="att-btn att-btn-idle">❌ Vắng</button><button class="att-btn att-btn-idle">🕐 Trễ</button></div></td>
+            <td><input class="note-input" placeholder="Ghi chú..." type="text"/></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;font-size:12px;">05</td>
+            <td><div class="learner-cell"><div class="l-avatar" style="background:#ec4899;">VT</div><div><div class="l-name">Võ Thị Thanh Trúc</div><div class="l-pkg">#LRN-005</div></div></div></td>
+            <td><div>English Pro</div><div class="pkg-remaining pkg-ok">✅ Còn 28 buổi</div></td>
+            <td><div class="att-toggle"><button class="att-btn att-present">✅ Có mặt</button><button class="att-btn att-btn-idle">❌ Vắng</button><button class="att-btn att-btn-idle">🕐 Trễ</button></div></td>
+            <td><input class="note-input" placeholder="Ghi chú..." type="text"/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

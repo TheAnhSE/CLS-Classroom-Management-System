@@ -1,0 +1,1317 @@
+
+
+
+
+
+
+
+
+
+CAPSTONE PROJECT REPORT
+Report 3 – Software Requirement Specification
+
+
+
+
+
+
+
+
+
+– Hanoi, Jan 2024 –
+Table of Contents
+I. Record of Changes3
+II. Software Requirement Specification4
+1. Overall Requirements4
+1.1 Context Diagram4
+1.2 Main Workflows5
+1.3 User Requirements5
+1.4 System Functionalities7
+1.5 Entity Relationship Diagram7
+2. Use Case Specifications8
+2.1 <<Feature Name1>>8
+2.2 Xyz Feature10
+3. Functional Requirements11
+3.1 Feature Name111
+3.2 User Authentication11
+3.3 System Administration12
+4. Non-Functional Requirements13
+3.1 External Interfaces13
+3.2 Quality Attributes13
+5. Requirement Appendix14
+5.1 Business Rules14
+5.2 System Messages14
+5.3 Other Requirements…15
+
+
+I. Record of Changes
+Date
+A*M, D
+In charge
+Change Description
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*A - Added M - Modified D - Deleted
+
+II. Software Requirement Specification
+1. Overall Requirements
+1.1 Context Diagram
+[Gives the overall description about the product with some introduction and the context diagram. The context diagram presents the boundary and connections between the system you’re developing and everything else in the universe. This identifies external entities (or terminators – software, hardware, human components, and other systems) outside the system that interface to it in some way, as well as data, control, and material flows between the terminators and the system.]
+<<Sample: The Cafeteria Ordering System is a new software system that replaces the current manual and telephone processes for ordering and picking up meals in the Process Impact cafeteria. The context diagram below illustrates the external entities and system interfaces for release 1.0. The system is expected to evolve over several releases, ultimately connecting to the Internet ordering services for several local restaurants and to credit and debit card authorization services.
+
+>>
+
+1.2 Main Workflows
+[Provide main workflows (business processes) using the swim-lane diagram(s) like sample below]
+1.2.1 Order Processing
+
+1.2.2 Customer Support
+…
+
+1.3 User Requirements
+1.3.1 Actors
+#
+Actor
+Description
+1
+Academic Admin
+The primary power user of CLS — responsible for all day-to-day academic and administrative operations.
+
+The Academic Admin replaces all legacy spreadsheet-based workflows and serves as the central system operator. Key responsibilities include:
+• Learner Lifecycle Management: Enrolls new learners, manages their profiles, assigns Learning Packages, and tracks each learner's progression from enrollment through completion or withdrawal.
+• Session Scheduling: Creates, modifies, and manages session timetables. The system validates all schedule inputs against conflict-detection rules to prevent room and Teacher double-booking (Scheduling Conflict).
+• Attendance Tracking: Records daily attendance for each session. Upon saving, the system automatically triggers Notification emails to the associated Parent.
+• Learning Package Monitoring: Receives system-generated alerts exactly 2 weeks before a learner's Learning Package expires, enabling proactive renewal outreach to reduce churn.
+• Feedback SLA Oversight: Monitors Teacher compliance with the 12-hour post-session Feedback SLA via dashboard reports.
+2
+Teacher
+The academic content contributor — responsible for delivering sessions and providing post-session learner evaluations within a strict SLA.
+
+Teachers interact with CLS primarily through the Feedback submission module and session schedule viewer. Key responsibilities include:
+• View Session Schedule: Accesses their assigned session timetable including date, time, room, and learner roster. The system guarantees zero Scheduling Conflicts across all Teacher assignments.
+• Submit Session Feedback: After each session, the Teacher must compose and submit a Feedback entry evaluating each learner's academic performance. A strict SLA of 12 hours post-session is enforced.
+• Confirm Attendance: Assists with confirming learner attendance during or after a session.
+• Receive SLA Reminders: The system sends reminders if a Feedback entry has not been submitted within the SLA window.
+3
+Parent (Sponsor)
+The financial sponsor and external stakeholder — a non-login recipient of automated system Notifications regarding their child's academic activity.
+
+In the MVP phase, Parents do not log into CLS directly. All interactions are system-to-Parent push communications via automated email (Notification). The Parent receives:
+• Attendance Notification: An automated email dispatched immediately after the Academic Admin records attendance, confirming whether the learner was present or absent for a specific session.
+• Schedule Change Notification: An automated email triggered whenever a session's date, time, room, or Teacher assignment is modified.
+• Session Feedback Report: A per-session email containing the Teacher's academic Feedback on the learner's performance.
+• Learning Package Expiry Notice: An automated email sent when the learner's remaining sessions or package duration approaches depletion (2-week threshold).
+4
+Center Director
+The project sponsor and strategic decision-maker — consumes high-level dashboards and operational reports generated by CLS.
+
+The Center Director interacts with CLS at a strategic oversight level. This actor does not perform routine data entry but relies on the system for visibility into critical business metrics:
+• Operational Dashboard: Accesses a summary dashboard displaying key operational indicators — total active learners, session utilization rates, and Teacher workload distribution.
+• Churn Rate Monitoring: Reviews learner retention and dropout trends to evaluate the effectiveness of proactive renewal alerts (target: reduce churn by 20%).
+• Revenue & Package Reports: Views aggregated data on Learning Package sales, remaining sessions across learners, and upcoming expirations for cash flow forecasting.
+• Scheduling Conflict Reports: Reviews audit logs confirming zero Scheduling Conflicts, validating system integrity.
+5
+Email Service
+A third-party email delivery platform (e.g., SendGrid, Amazon SES) integrated via REST API to handle all automated outbound Notifications.
+
+The Email Service is a non-human, external system actor. CLS delegates all email dispatch operations to this service. Key interactions include:
+• Email Dispatch Request: CLS sends structured API requests containing recipient address (Parent email), subject line, and HTML email body for each Notification event (attendance, schedule change, Feedback, Learning Package expiry).
+• Delivery Status Response: The Email Service returns delivery status callbacks (delivered, bounced, failed) to CLS, enabling the system to log Notification outcomes and flag delivery failures for Academic Admin review.
+1.3.2 Use Cases (UC)
+A Use Case (UC) describes a sequence of interactions between the CLS system and an external actor that results in a measurable outcome of value. Use case names follow the verb-object naming convention (e.g., "Record Session Attendance"). The following table lists all identified use cases grouped by system feature, mapped to the CLS MVP Phase 1 scope and business goals.
+ID
+Use Case
+Feature
+Use Case Description
+UC-01
+Login System
+User Authentication
+Allows Academic Admin, Teacher, and Center Director to securely log into CLS using email and password credentials. The system validates credentials, tracks login activity, and redirects users to the appropriate dashboard based on their role.
+UC-02
+Reset Password
+User Authentication
+Allows authenticated users to reset their forgotten password via a verification email link. The system sends a password reset token to the registered email address and allows the user to set a new password within a time-limited window.
+UC-03
+Enroll New Learner
+Learner Management
+Allows the Academic Admin to register a new learner into the system by entering personal details, Parent (Sponsor) contact information, and initial Learning Package selection. Upon successful enrollment, parent email is stored for automated Notification dispatch.
+UC-04
+View Learner List
+Learner Management
+Allows the Academic Admin and Center Director to view, search, filter, and sort the list of all learners. The list displays learner name, status (Active / Inactive / Withdrawn), assigned Learning Package, remaining sessions, and associated Parent contact.
+UC-05
+Update Learner Profile
+Learner Management
+Allows the Academic Admin to modify a learner's personal details, parent contact information, or enrollment status. Status transitions include Active → Inactive, Active → Withdrawn, and Inactive → Active, following the center's operational policy.
+UC-06
+Create Learning Package
+Learning Package Management
+Allows the Academic Admin to define a new Learning Package with attributes: package name, total number of sessions (or duration in months), tuition fee amount, and applicable subject area (English / Kids Coding).
+UC-07
+Assign Learning Package to Learner
+Learning Package Management
+Allows the Academic Admin to assign or renew a Learning Package for a specific learner. The system records the assignment date, calculates the expected expiration date, and initializes the remaining session counter for attendance deduction tracking.
+UC-08
+Track Package Remaining Sessions
+Learning Package Management
+Allows the Academic Admin to monitor real-time remaining sessions for each learner's Learning Package. Each recorded attendance automatically decrements the session counter. Supports filtering by expiry urgency and package type.
+UC-09
+Receive Package Expiry Alert
+Learning Package Management
+The system automatically generates an in-app alert to the Academic Admin exactly 2 weeks before a learner's Learning Package is fully depleted (based on remaining sessions or end date). This enables proactive outreach for renewal, directly addressing the 20% churn reduction target.
+UC-10
+Create Session Schedule
+Session Scheduling
+Allows the Academic Admin to schedule a new session by specifying date, time slot, classroom, assigned Teacher, subject, and the list of enrolled learners. Before saving, the system runs the Scheduling Conflict detection algorithm to prevent Teacher or room double-booking.
+UC-11
+Update Session Schedule
+Session Scheduling
+Allows the Academic Admin to modify an existing session's date, time, room, or Teacher assignment. The system re-validates all conflict rules upon each update. If any change affects the Parent-facing schedule, the system automatically triggers a Schedule Change Notification email to all associated Parents.
+UC-12
+View Session Timetable
+Session Scheduling
+Allows Academic Admin, Teacher, and Center Director to view the weekly/monthly session timetable. Teachers see only their own assigned sessions. Academic Admin and Center Director can view the full center-wide schedule with room utilization overview.
+UC-13
+Detect Scheduling Conflict
+Session Scheduling
+The system automatically validates every session creation or update against conflict-detection rules: (1) No two sessions can occupy the same room at the same time, (2) No Teacher can be assigned to overlapping sessions. If a conflict is detected, the system blocks the operation and displays a descriptive error message specifying the conflicting resource.
+UC-14
+Record Session Attendance
+Attendance Management
+Allows the Academic Admin (or Teacher) to mark each learner as Present, Absent, or Late for a specific session. Upon saving, the system: (1) decrements the learner's remaining sessions in their Learning Package, (2) automatically triggers an Attendance Notification email to the Parent, and (3) logs the attendance record for historical tracking.
+UC-15
+View Attendance History
+Attendance Management
+Allows the Academic Admin and Center Director to view the attendance history of any learner, filterable by date range, session, or Teacher. Provides summary statistics including total sessions attended, absence rate, and attendance trend visualization.
+UC-16
+Submit Session Feedback
+Teacher Feedback
+Allows the Teacher to compose and submit an academic Feedback entry for each learner after a session. The SLA mandates submission within 12 hours post-session. The Feedback form includes fields for academic performance rating, behavioral notes, and improvement recommendations. Upon submission, the system timestamps the entry and checks SLA compliance.
+UC-17
+View Feedback History
+Teacher Feedback
+Allows the Academic Admin, Teacher, and Center Director to view historical Feedback entries for any learner, filterable by date range, Teacher, or session. Each entry displays the submission timestamp, SLA compliance status (On-time / Late), and full Feedback content.
+UC-18
+Receive Feedback SLA Reminder
+Teacher Feedback
+The system automatically sends a reminder notification to the Teacher if a session Feedback has not been submitted within 8 hours post-session (warning) and again at the 12-hour SLA deadline. Late submissions are flagged in the system for Academic Admin oversight.
+UC-19
+Send Attendance Notification
+Parent Notification Engine
+The system automatically dispatches an email to the Parent immediately after attendance is recorded for their child. The email includes session date, time, Teacher name, and attendance status (Present / Absent / Late). This is a fully automated, zero-touch process requiring no manual intervention from Academic Admin.
+UC-20
+Send Schedule Change Notification
+Parent Notification Engine
+The system automatically dispatches an email to the Parent whenever a session involving their child is modified (change of date, time, room, or Teacher). The email clearly states the original and updated schedule details to avoid confusion.
+UC-21
+Send Feedback Report to Parent
+Parent Notification Engine
+The system automatically dispatches an email to the Parent after the Teacher submits a session Feedback for their child. The email contains the Teacher's academic evaluation, performance notes, and any improvement recommendations — providing transparent academic visibility.
+UC-22
+Send Package Expiry Notification
+Parent Notification Engine
+The system automatically dispatches an email to the Parent when their child's Learning Package remaining sessions reach the 2-week threshold. The email includes current remaining sessions, projected depletion date, and a call-to-action to contact the center for renewal.
+UC-23
+View Admin Operational Dashboard
+Dashboard & Reports
+Provides the Academic Admin with a centralized dashboard displaying: today's session schedule, pending attendance entries, overdue Feedback submissions (SLA violations), upcoming Learning Package expirations, and recent Notification delivery status. Designed to replace 100% of manual Excel tracking.
+UC-24
+View Center Director Dashboard
+Dashboard & Reports
+Provides the Center Director with a high-level strategic dashboard displaying: total active learners, learner churn rate trends, revenue from Learning Packages, session utilization rates, Teacher workload distribution, and Feedback SLA compliance percentage.
+UC-25
+Export Operational Reports
+Dashboard & Reports
+Allows the Academic Admin and Center Director to export attendance summaries, learner status lists, package expiry timelines, and Feedback compliance reports as downloadable files (PDF / Excel) for offline review or stakeholder presentation.
+UC-26
+Manage User Accounts
+System Administration
+Allows the Academic Admin to create, update, activate, or deactivate user accounts for Teachers and other Academic Admin staff. Each account is assigned a role (Academic Admin / Teacher / Center Director) which determines system access permissions and visible menu items.
+UC-27
+Manage Master Data
+System Administration
+Allows the Academic Admin to manage system-wide configuration data including: classroom definitions (name, capacity), time slot templates, subject categories (English / Kids Coding), and notification email templates. This is the foundational data required before scheduling sessions.
+1.3.2 Use Case Diagrams
+In this section, you need to provide the UC diagram(s) to show the actor-UCs and UC-UC relationships like the sample below. You can have multiple UC diagrams for the system, each diagram is for one actor or one workflow]
+1.3.2.1 UCs for Guest
+
+
+1.3.2.2 UCs for Student
+
+1.3.2.3 …
+
+1.4 System Functionalities
+[Provide functionality overview of software system: screen flow, screen descriptions, system user roles, screen authorization, non-screen functions, ERD]
+1.4.1 Screens Flow
+[This part shows the system screens and the relationship among screens. You can draw the Screens Flow for the system in the form of diagram as below.]
+
+1.4.2 Screen Authorization
+[Provide the system roles authorization to the system features (down to screens, and event to the screen activities if applicable) in the table form as below – replace Role-Name1, Role-Name2,… with your specific system user role names]
+Screen Name
+Academic Admin
+Teacher
+Center Director
+1. Login Page
+X
+X
+X
+2. Forgot/Reset Password Modal
+X
+X
+X
+3. Admin Dashboard Page
+X
+-
+-
+4. Director Dashboard Page
+-
+-
+X
+5. Teacher Dashboard & Timetable
+-
+X
+-
+6. Learner List Page
+X
+-
+V
+7. Learner Profile Page
+X
+-
+-
+8. Enroll Learner / Update Form
+X
+-
+-
+9. Package Management Page
+X
+-
+V
+10. Assign Package Form
+X
+-
+-
+11. Session Timetable Page
+X
+V
+V
+12. Create/Update Session Form
+X
+-
+-
+13. Attendance Tracking Page
+X
+V
+V
+14. Record Attendance Form
+X
+X
+-
+15. Feedback History Page
+X
+V
+V
+16. Submit Feedback Form
+-
+X
+-
+17. User Account Mgmt Page
+X
+-
+-
+18. Master Data Mgmt Page
+X
+-
+-
+19. Export Reports Modal
+X
+-
+X
+* Legend: X = Full Access (CRUD); V = View Only; - = No Access. Parent & Email Service do not have login screens.
+
+1.4.3 Non-UI Functions
+[Provide the descriptions for the non-screen system functions, i.e batch/cron job, service, API, etc.]
+#
+Feature
+System Function
+Description
+1
+<<Feature Name>>
+<<Function Name1>>
+<<Function Name1 Description>>
+2
+…
+
+
+
+1.5 Entity Relationship Diagram
+[Provide the ERD using the Crow-Foot notation and the entity descriptions as below]
+
+Entities Description
+#
+Entity
+Description
+1
+Role
+Stores role definitions controlling system access permissions for Academic Admin, Teacher, and Center Director.
+2
+User
+Stores authenticated user accounts including login credentials, profile data, and role assignments for all system operators (Academic Admin, Teacher, Center Director).
+3
+Learner
+Stores learner personal information, enrollment status, and parent association. Tracks the full lifecycle from enrollment through completion or withdrawal.
+4
+Parent
+Stores parent (financial sponsor) contact information. Primary recipient of all automated email Notifications regarding their child's academic activity.
+5
+Notification
+Logs all automated email notifications dispatched to Parents via the Email Service (attendance, schedule changes, feedback reports, package expiry alerts). Tracks delivery status.
+6
+Subject
+Master data for subject categories offered by the center (e.g., English, Kids Coding). Referenced by Learning Packages and Sessions.
+7
+LearningPackage
+Defines tuition fee packages available for purchase, specifying total sessions or duration, fee amount, and associated subject. Used for enrollment and renewal tracking.
+8
+Classroom
+Master data for physical classrooms/rooms at the center. Used for session scheduling and conflict detection (room double-booking prevention).
+9
+Session
+Represents a specific scheduled class session with assigned date, time slot, classroom, teacher, and subject. Core entity for scheduling, attendance, and feedback workflows.
+10
+Feedback
+Stores the Teacher's academic evaluation for each Learner after a Session. Tracks SLA compliance (12-hour submission deadline) with timestamps.
+11
+Setting
+System-wide configuration and master data entries (e.g., time slot templates, notification email templates, default values). Managed by Academic Admin.
+12
+LearnerPackage
+Junction entity recording the assignment of a Learning Package to a specific Learner. Tracks remaining sessions, expiry date, and renewal status for churn prevention alerts.
+13
+SessionLearner
+Junction entity for the many-to-many relationship between Session and Learner. Records which learners are enrolled in each session.
+14
+Attendance
+Records daily attendance status (Present, Absent, Late) for each Learner per Session. Triggers automated Notification to Parent and decrements Learning Package remaining sessions.
+15
+ActivityLog
+Audit trail recording all significant user actions within the system (login, data changes, exports) for security monitoring and operational accountability.
+
+2. Use Case Specifications
+[UC-01] System Login
+Primary Actors:
+Admin, Teacher, Center Director
+Secondary Actors:
+N/A
+Description:
+UC-01 - Allows users to authenticate via email to access role-centric functions.
+Preconditions:
+User has a registered active account with assigned roles.
+Postconditions:
+User is successfully logged in. Log created in ActivityLog.
+Normal Sequences/Flow:
+1. User navigates to the login page portal.
+2. System renders the authentication view.
+3. User enters Email and Password and clicks 'Login'.
+4. System parses data and checks against DB (BR-AUTH-01).
+5. System confirms Role active status (BR-AUTH-02).
+6. System redirects to Dashboard.
+7. System renders toast MSG-AUTH-100: 'Đăng nhập thành công'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 3.E1_ Empty Required Fields:
+  1. User leaves Email/Password blank.
+  2. System shows MSG-AUTH-400: 'Vui lòng nhập đầy đủ thông tin.' (BR-AUTH-03)
+Step 4.E1_ Invalid Credentials:
+  1. System detects mismatch.
+  2. System shows MSG-AUTH-401: 'Email hoặc mật khẩu sai.'
+Step 5.E1_ Deactivated Role:
+  1. System detects IsActive = False.
+  2. System shows MSG-AUTH-403: 'Tài khoản bị hạn chế truy cập.'
+
+[UC-02] Reset Password
+Primary Actors:
+Admin, Teacher, Center Director
+Secondary Actors:
+Email Service
+Description:
+UC-02 - Initiates a secure password reset challenge via email.
+Preconditions:
+User knows their registered email.
+Postconditions:
+Password Hash is overwritten.
+Normal Sequences/Flow:
+1. User clicks 'Quên Mật Khẩu'.
+2. System prompts for email.
+3. User inputs email.
+4. System verifies email exists in DB (BR-AUTH-04).
+5. System generates OTP/Link and dispatches to Email Service.
+6. System shows MSG-AUTH-101: 'Đã gửi link xác nhận'.
+7. User accesses link, inputs new password twice.
+8. System validates password strength (BR-AUTH-05) and updates DB.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 4.E1_ Unregistered Email:
+  1. System suppresses error, shows MSG-AUTH-101 regardless to prevent enum.
+Step 8.E1_ Weak Password:
+  1. System evaluates password entropy < threshold.
+  2. System shows MSG-AUTH-405: 'Mật khẩu quá yếu, cần 8 ký tự và số.'
+
+[UC-03] Create Learner Profile
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-03 - Admin registers a new Learner and binds them to a Parent/Sponsor.
+Preconditions:
+Admin authenticated.
+Postconditions:
+Learner and Parent entity created/linked.
+Normal Sequences/Flow:
+1. Admin selects 'Thêm Học Viên'.
+2. Form renders Name, DOB, Addr, Parent Name, Parent Email, Phone.
+3. Admin submits.
+4. System checks if Parent Email exists (BR-LRN-01).
+5. System creates Learner linked to Parent.
+6. Displays MSG-LRN-100: 'Thêm học viên thành công'.
+Alternative Sequences/Flows:
+Step 4.A1_ Parent Email Already Exists:
+  1. System links new Learner to existing Parent ID.
+  2. Skips duplicate Parent creation.
+Exceptions:
+Step 3.E1_ Invalid Email Format:
+  1. Parent Email fails regex.
+  2. Shows MSG-LRN-400: 'Sai định dạng email.'
+
+[UC-04] View Learner Profile
+Primary Actors:
+Academic Admin, Center Director
+Secondary Actors:
+N/A
+Description:
+UC-04 - Retrieves deeply nested Learner history.
+Preconditions:
+LearnerID exists.
+Postconditions:
+Profile data mounted on DOM.
+Normal Sequences/Flow:
+1. User accesses /learners/{id}.
+2. System executes JOIN on Learner, Parent, LearnerPackage.
+3. System checks View permissions (BR-LRN-02).
+4. Data is displayed.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 2.E1_ Not Found:
+  1. LearnerID missing.
+  2. Renders 404 MSG-LRN-404: 'Học viên không tồn tại.'
+
+[UC-05] Update Learner Profile
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-05 - Modifies user biographical or contact details.
+Preconditions:
+Learner profile active.
+Postconditions:
+Database values overwritten.
+Normal Sequences/Flow:
+1. Admin engages 'Edit' mode.
+2. Admin changes Phone.
+3. Admin saves.
+4. System sanitizes inputs (BR-LRN-03) and saves.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-06] Deactivate Learner Profile
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-06 - Soft deletes or sets IsActive=False for churned students.
+Preconditions:
+Learner is currently active.
+Postconditions:
+Learner hidden from active queries.
+Normal Sequences/Flow:
+1. Admin clicks 'Vô hiệu hóa'.
+2. Prompt asks for reason.
+3. System checks for ongoing active packages (BR-LRN-04).
+4. System updates state.
+5. Shows MSG-LRN-101: 'Thao tác thành công'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 3.E1_ Active Sessions Present:
+  1. System detects RemainingSessions > 0.
+  2. Shows MSG-LRN-409: 'Cần tất toán gói học phí trước khi vô hiệu hóa.'
+
+[UC-07] Define New Package
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-07 - Creates a pricing template for academic subjects.
+Preconditions:
+Admin authenticated.
+Postconditions:
+Package template generated.
+Normal Sequences/Flow:
+1. Admin inputs Name, SubjectID, Total Sessions, Fee.
+2. System validates integers (BR-PKG-01).
+3. Save executes.
+4. Shows MSG-PKG-100: 'Tạo gói học thành công'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-08] View Package Catalog
+Primary Actors:
+Admin, Director
+Secondary Actors:
+N/A
+Description:
+UC-08 - Lists active tuition offerings.
+Preconditions:
+N/A
+Postconditions:
+List displayed.
+Normal Sequences/Flow:
+1. User navigates to catalog.
+2. System fetches all IsActive=True packages (BR-PKG-02).
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-09] Assign Package to Learner
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-09 - Triggers ledger logic assigning session balance.
+Preconditions:
+Learner & Package exist.
+Postconditions:
+LearnerPackage table row created.
+Normal Sequences/Flow:
+1. Admin selects 'Gán gói' on Learner Profile.
+2. Selects Package from dropdown.
+3. System initializes RemainingSessions = TotalSessions (BR-PKG-03).
+4. System activates package timeline.
+5. MSG-PKG-101: 'Gán lượt học thành công'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 3.E1_ Existing Active Package Overlap:
+  1. Learner already has active same subject package.
+  2. System shows MSG-PKG-400: 'Học viên đang có gói học này chưa dùng hết.'
+
+[UC-10] Update Package Status
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-10 - Manual over-ride for balance adjustments.
+Preconditions:
+Package is assigned.
+Postconditions:
+Balance adjusted. Audit created.
+Normal Sequences/Flow:
+1. Admin inputs delta adjustment (+/- sessions).
+2. System forces Admin to input Reason (BR-PKG-04).
+3. Value overridden.
+4. MSG-PKG-102: 'Điều chỉnh thành công'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-11] Schedule New Session
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-11 - Books academic blocks. Core function of operations.
+Preconditions:
+Classrooms and Teachers are defined.
+Postconditions:
+Session record generated.
+Normal Sequences/Flow:
+1. Admin opens Modal 'Tạo Lịch Học'.
+2. Admin selects Subject, Date, Room, Teacher, Time Range.
+3. Admin binds N learners.
+4. System invokes Conflict Detection Algorithm (BR-SCH-01).
+5. System prevents learner overlap (BR-SCH-02).
+6. Date saved.
+7. MSG-SCH-100: 'Xếp lịch thành công'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 4.E1_ Teacher Double Booked:
+  1. TeacherID exists in TimeRange.
+  2. Block Save. MSG-SCH-409: 'Lỗi: Giáo viên đã có dải lịch trùng.'
+Step 4.E2_ Room Double Booked:
+  1. RoomID exists in TimeRange.
+  2. Block Save. MSG-SCH-410: 'Lỗi: Phòng học đang bận.'
+
+[UC-12] Detect Handling Algorithm (Include)
+Primary Actors:
+System
+Secondary Actors:
+N/A
+Description:
+UC-12 - Runs background check preventing multi-overlaps.
+Preconditions:
+Triggered by Schedule actions.
+Postconditions:
+Safe/Fail boolean.
+Normal Sequences/Flow:
+1. Accept payload (TimeStart, TimeEnd, RoomID, TchrID).
+2. Query SQL `WHERE (Start <= EndRequested) AND (End >= StartRequested)`.
+3. If COUNT == 0 return True.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-13] Update Session Details
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-13 - Changes params of an existing block.
+Preconditions:
+Session not started.
+Postconditions:
+Session modified.
+Normal Sequences/Flow:
+1. Admin clicks Session card in Calendar.
+2. Changes Room to larger capacity (BR-SCH-03).
+3. Reruns Conflict Algorithm (UC-12).
+4. Updates DB.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 2.E1_ Capacity Limit:
+  1. Learners mapped > Room Capacity.
+  2. MSG-SCH-411: 'Sĩ số vượt quá sức chứa phòng học.'
+
+[UC-14] Cancel Session
+Primary Actors:
+Academic Admin
+Secondary Actors:
+Email Service
+Description:
+UC-14 - Voids session and refunds learner balances.
+Preconditions:
+Session active.
+Postconditions:
+Balances restored, email out.
+Normal Sequences/Flow:
+1. Admin clicks Cancel.
+2. System reverts associated balances if already deducted (BR-SCH-04).
+3. Triggers UC-24 Email Alert.
+4. MSG-SCH-105: 'Đã hủy lịch'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-15] View Session Timetable
+Primary Actors:
+Admin, Teacher, Center Director
+Secondary Actors:
+N/A
+Description:
+UC-15 - Renders Calendar.
+Preconditions:
+N/A
+Postconditions:
+Rendered DOM.
+Normal Sequences/Flow:
+1. User clicks Calendar.
+2. System identifies User Role (BR-SCH-05).
+3. If Teacher, filter WHERE TeacherID = Self. If Admin, show ALL.
+4. Draw canvas.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-16] Record Session Attendance
+Primary Actors:
+Teacher
+Secondary Actors:
+N/A
+Description:
+UC-16 - Takes roll call and triggers billing engine.
+Preconditions:
+Session is Active/Past.
+Postconditions:
+Balances updated.
+Normal Sequences/Flow:
+1. Teacher opens Attendance tab.
+2. Selects Present/Absent/Late for class list.
+3. Clicks Confirm.
+4. System deducts 1 session from mapped LearnerPackage (BR-ATT-01).
+5. If Absent/Late, triggers UC-21 Alert (BR-ATT-02).
+6. MSG-ATT-100: 'Điểm danh lưu thành công'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 4.E1_ Package Depleted:
+  1. LearnerPackage = 0.
+  2. System allows attendance but logs as Arrears. MSG-ATT-401: 'Cảnh báo nợ phí.'
+
+[UC-17] View Attendance History
+Primary Actors:
+Admin, Teacher
+Secondary Actors:
+N/A
+Description:
+UC-17 - Check past attendance records.
+Preconditions:
+Records exist.
+Postconditions:
+Data displayed.
+Normal Sequences/Flow:
+1. User queries attendance.
+2. System renders historical list.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-18] Submit Post-Session Feedback
+Primary Actors:
+Teacher
+Secondary Actors:
+Email Service
+Description:
+UC-18 - Records academic note.
+Preconditions:
+Attendance has been taken (BR-FDB-01).
+Postconditions:
+Feedback stored.
+Normal Sequences/Flow:
+1. Teacher selects Learner in roster.
+2. Enters Rating (1-5) and Comments.
+3. System checks SLA time logic (UC-19).
+4. System triggers parent email (UC-22).
+5. MSG-FDB-100: 'Gửi nhận xét thành công'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+Step 1.E1_ Attendance Missing:
+  1. System blocks. MSG-FDB-401: 'Chưa điểm danh, không thể đánh giá.'
+
+[UC-19] Track 12h SLA Compliance
+Primary Actors:
+System
+Secondary Actors:
+N/A
+Description:
+UC-19 - Applies business pressure logic on Teacher submissions.
+Preconditions:
+Session Ends.
+Postconditions:
+SLA Boolean calculated.
+Normal Sequences/Flow:
+1. On Feedback Insert, System computes Delta: CurrentTime - SessionEndTime (BR-FDB-02).
+2. If Delta <= 12 hours, IsSLACompliant = True.
+3. Else, IsSLACompliant = False.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-20] View Feedback History
+Primary Actors:
+Admin, Director
+Secondary Actors:
+N/A
+Description:
+UC-20 - Reads all stored feedbacks.
+Preconditions:
+N/A
+Postconditions:
+Readout.
+Normal Sequences/Flow:
+1. User checks Feedback.
+2. Search by Learner/Teacher displays.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-21] Dispatch Attendance Alert
+Primary Actors:
+System
+Secondary Actors:
+Parent
+Description:
+UC-21 - Triggers email when child breaks routine.
+Preconditions:
+Attendance = Absent.
+Postconditions:
+Mail in queue.
+Normal Sequences/Flow:
+1. Event Listener captures Absence.
+2. Looks up ParentID -> Email.
+3. Composes standard template (BR-NOT-01).
+4. Dispatches.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-22] Dispatch Feedback Alert
+Primary Actors:
+System
+Secondary Actors:
+Parent
+Description:
+UC-22 - Transmits teacher comments.
+Preconditions:
+Feedback Saved.
+Postconditions:
+Mail in queue.
+Normal Sequences/Flow:
+1. System captures Feedback payload.
+2. Dispatches Email.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-23] Dispatch Package Warning
+Primary Actors:
+System
+Secondary Actors:
+Parent
+Description:
+UC-23 - Business critical cron job for cashflow protection.
+Preconditions:
+Cron 00:00 AM.
+Postconditions:
+Mails sent.
+Normal Sequences/Flow:
+1. Cron starts DB scan.
+2. Checks `WHERE Remaining <= 2` (BR-NOT-02).
+3. Sends 'Please Renew' mail sequence.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-24] Dispatch Schedule Change Alert
+Primary Actors:
+System
+Secondary Actors:
+Parent
+Description:
+UC-24 - Informs parents of operational shifts.
+Preconditions:
+Session changes.
+Postconditions:
+Mail queued.
+Normal Sequences/Flow:
+1. Hooks into Update/Cancel (UC-13/14).
+2. Bcasts to class list.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-25] View Director Dashboard
+Primary Actors:
+Director
+Secondary Actors:
+N/A
+Description:
+UC-25 - Aggregates macro statistics.
+Preconditions:
+Director Login.
+Postconditions:
+Stats rendered.
+Normal Sequences/Flow:
+1. Render Total Revenue calculation (BR-ADM-01).
+2. Render SLA breach percentage (BR-ADM-02).
+3. Render Churn Risk accounts.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-26] Export Financial Reports
+Primary Actors:
+Director
+Secondary Actors:
+N/A
+Description:
+UC-26 - Generates CSV payloads.
+Preconditions:
+N/A.
+Postconditions:
+CSV Downloaded.
+Normal Sequences/Flow:
+1. Clicks 'Báo cáo'.
+2. Selects Date Range.
+3. Generates output stream.
+4. Downloads file.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[UC-27] Manage System Master Data
+Primary Actors:
+Academic Admin
+Secondary Actors:
+N/A
+Description:
+UC-27 - Configure rooms, roles, limits.
+Preconditions:
+Admin Level.
+Postconditions:
+DB updated.
+Normal Sequences/Flow:
+1. Access Setting Panel.
+2. Update system params (e.g. max capacity).
+3. MSG-ADM-100: 'Lưu thay đổi'.
+Alternative Sequences/Flows:
+N/A
+Exceptions:
+N/A
+
+[Provide specifications for the use cases (UCs) those are covered in the system. The UCs are grouped by the system features and even sub features. You just need to provide UC specifications for complex UCs involving in the main workflows (business processes). Other UCs (i.e CRUD or data-viewing UCs) are simple, and you just need to refer the descriptions in the Functional Requirement (part 3) below)]
+2.1 <<Feature Name1>>
+2.1.1 UC Name1
+Primary Actors
+
+Secondary Actors
+
+Description
+
+Preconditions
+
+Postconditions
+
+Normal Sequence/Flow
+
+Alternative Sequences/Flows
+
+
+Primary and Secondary Actors
+An actor is a person or other entity external to the software system being specified who interacts with the system and performs use cases to accomplish tasks. Name the primary actor that will be initiating this UC and any other secondary actors who will participate in completing execution of the UC.
+Description
+Provide a brief description of the reason for and outcome of this use case, or a high-level description of the sequence of actions and the outcome of executing the use case. The description can be in the form of a user story (As a <type of user>, I want <some goal> so that <some reasons>)
+Preconditions
+List any activities that must take place, or any conditions that must be true, before the use case can be started. 
+Postconditions
+Describe the state of the system at the successful conclusion of the use case execution. 
+Normal Flow
+Provide a description of the user actions and corresponding system responses that will take place during execution of the use case under normal, expected conditions. 
+Alternative Flows
+Describe below two information if any:
+Other successful usage scenarios that can take place within this use case. State the alternative flow, and describe any differences in the sequence of steps that take place. 
+Any anticipated error conditions that could occur during execution of the use case and how the system is to respond to those conditions.
+
+2.1.2 Login System
+Primary Actors
+Customer
+Secondary Actors
+None
+Description
+As a user, I want to be able to log into the system so that I can use the system’s authenticated features and access my personalized account.
+Preconditions
+User account has been created & authorized
+Postconditions
+User logs in the system successfully
+The system tracked successful login into the Activity Log
+Normal Sequence/Flow
+Login System
+User clicks Login button from the page header or accesses an authenticated feature (from a link or type the page URL directly into the address bar)
+System show the User Login screen
+User types in the login details (email, password)
+User clicks the Login button
+System validates the login details (BR-01, BR-02)
+System allows user to access
+System tracks user’s success login to the Activity Log
+System directs user to the Home Page (or the previous calling page if any)
+Alternative Sequences/Flows
+Step 2.1_Google Login
+User clicks Google Login button to login system using Google account
+System redirects the user to the Google’s Login screen
+User types in the Google account details and chooses to login
+Google validates user’s login information successfully and redirect him/her back to the system
+Return to step 5 of normal flow.
+Step 4_System can’t authenticate the user
+User can’t be authenticated & get relevant error message in one of below cases
+He/she leaves the Email and/or Password field blank (MSG10)
+Input Email or Password are incorrect (MSG09)
+Input Email/Password are correct but email has not been verified (MSG11)
+The user account is blocked / inactive (MSG12)
+If user inputs wrong logging-in details 5 times continuously, system will lock his/her account in 30 minutes (with relevant warning message - MSG13)
+
+2.1.3 UC Name2
+…
+2.2 Xyz Feature
+…
+
+3. Functional Requirements
+[Provide descriptions about the system’s functions/screens. The functions/screens are grouped by the system features, and even sub-features if needed. For the screens, you need to provide the screen layouts (mock-up screens) and relevant specifications if needed]
+3.1 Feature Name1
+3.1.1 SubFeature Name1.1
+3.1.1.1 Screen/Function Name1
+[Content #1: UI layout (Mockup screen prototype)]
+[Content #2: brief descriptions of the screen/function, mapped to the relevant use cases]
+[Content #3: provide further descriptions for the screen’s components/fields using table format below]
+Field Name
+Description
+Field Name1
+Field description: data type min/max length or value, initial data, etc.
+Field Name2
+…
+Field Group-Name1
+Field Name3
+…
+Field Name4
+…
+Field Group-Name2
+…
+…
+
+3.1.1.2 Screen/Function Name2
+…
+3.1.2 SubFeature Name1.2
+…
+3.2 User Authentication
+3.2.1 User Register
+…
+3.2.2 User Login
+…
+3.2.3 Password Reset
+…
+3.3 System Administration
+3.3.1 Master Data
+3.3.1.1 Setting List
+(3)(3)(2)(2)(1)(1)
+(3)
+(3)
+(2)
+(2)
+(1)
+(1)
+This screen allows the Administrator to: 
+View Setting List: view list of current master data. 
+Filter Setting List: filter master data by data types, statuses
+Search Settings: enter keyword(s) to search master data by their names or values
+Sort Setting List: sort mater data list (ascending, descending) by clicking column headers
+On the screen, s/he can also 
+Activate/Deactivate Setting: change status of a specific inactive/active master data
+Choose to go to the Setting Details screens for adding new or updating an existing master data by clicking the New Setting or Edit link.
+Field Description
+Field Name
+Description
+(1)
+Initial values: all the active setting names with null or blank type
+Hover the mouse to show the field name: “Setting Type”
+(2)
+Initial values: All Statuses, Active, Inactive (default value “All Status”)
+Hover the mouse to show the field name: “Setting Status”
+(3)
+The change-status action is Activate or Deactivate depending on the current status of the relevant setting (Inactive or Active, respectively).
+
+3.3.1.2 Setting Details
+
+
+
+This screen allows the Administrator to: 
+Add New Setting: add new master data. 
+Update Setting Details: update details of a specific master data
+Field Description
+Field Name
+Description
+Name
+Data type: non-digit string, max length of 20 characters
+Type
+Initial data values: all active setting names (with null or blank type)
+Value
+Data type: any string, max length of 100 characters
+Priority
+Data type: a positive integer
+Description
+Data type: any string, max length of 200 characters
+
+3.3.2 User Management
+3.3.2.1 User List
+…
+3.3.2.2 User Details
+…
+4. Non-Functional Requirements
+3.1 External Interfaces
+[This section provides information to ensure that the system will communicate properly with users and with external hardware or software/system elements.]
+3.2 Quality Attributes
+[List all the required system characteristics (quality attributes) specification. Some of the possible attributes are provided with the guide/descriptions are mentioned here]
+3.2.1 Usability 
+[This section includes all those requirements that affect usability. For example, specify the required training time for a normal user and a power user to become productive at particular operations specify measurable task times for typical tasks or base the new system’s usability requirements on other systems that the users know and like specify requirement to conform to common usability standards, such as IBM’s CUA standards Microsoft’s GUI standards]
+3.2.2 Performance
+[The system’s performance characteristics are outlined in this section. Include specific response times. Where applicable, reference related Use Cases by name.
+Response time for a transaction (average, maximum)
+Throughput, for example, transactions per second
+Capacity, for example, the number of customers or transactions the system can accommodate
+Resource utilization, such as memory, disk, communications, and so forth.]
+
+3.2.3 …
+
+5. Requirement Appendix
+[Provide business rules, common requirements, or other extra requirements information here]
+5.1 Business Rules
+[Provide common business rules that you must follow. The information can be provided in the table format as the sample below]
+ID
+Rule Definition
+BR-01
+Delivery time windows are 15 minutes, beginning on each quarter hour.
+BR-02
+Deliveries must be completed between 10:00 A.M. and 2:00 P.M. local time, inclusive.
+BR-03
+All meals in a single order must be delivered to the same location.
+BR-04
+All meals in a single order must be paid for by using the same payment method.
+BR-11
+If an order is to be delivered, the patron must pay by payroll deduction.
+BR-12
+Order price is calculated as the sum of each food item price times the quantity of that food item ordered, plus applicable sales tax, plus a delivery charge if a meal is delivered outside the free delivery zone.
+BR-24
+Only cafeteria employees who are designated as Menu Managers by the Cafeteria Manager can create, modify, or delete cafeteria menus.
+BR-33
+Network transmissions that involve financial information or personally identifiable information require 256-bit encryption.
+BR-86
+Only regular employees can register for payroll deduction for any company purchase.
+BR-88
+An employee can register for payroll deduction payment of cafeteria meals if no more than 40 percent of his gross pay is currently being deducted for other reasons.
+
+5.2 System Messages
+#
+Message code
+Message Type
+Context
+Content
+1
+MSG01
+In line
+There is not any search result
+No search results.  
+2
+MSG02
+In red, under the text box
+Input-required fields are empty
+The * field is required. 
+3
+MSG03
+Toast message
+Updating asset(s) information successfully
+Update asset(s) successfully. 
+4
+MSG04
+Toast message
+Adding new asset successfully
+Add asset successfully. 
+5
+MSG05
+Toast message
+Confirming email of asset hand-over is sent successfully
+A confirmation email has been sent to {email_address}. 
+6
+MSG06
+Toast message
+Resetting asset information successfully
+Return asset(s) successfully. 
+7
+MSG07
+Toast message
+Deleting asset information successfully
+Delete asset(s) successfully. 
+8
+MSG08
+In red, under the text box
+Input value length > max length
+Exceed max length of {max_length}. 
+9
+MSG09
+In line
+Username or password is not correct when clicking sign-in
+Incorrrect user name or password. Please check again.
+10
+..
+
+
+
+
+5.3 Other Requirements…

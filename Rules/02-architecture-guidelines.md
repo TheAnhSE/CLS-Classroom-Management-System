@@ -1,50 +1,55 @@
-# Nguyển Tắc & Kiến Trúc Phần Mềm (Software Architecture Guidelines)
+# Nguyên Tắc & Kiến Trúc Phần Mềm (Software Architecture Guidelines)
 
-Tài liệu này định dạng các mô hình kiến trúc cốt lõi, quy hoạch các layers và luồng giao tiếp dữ liệu cho toàn bộ hệ thống CLS (Classroom Management System).
+Tài liệu này định dạng mô hình kiến trúc cốt lõi, quy hoạch các layers và luồng giao tiếp dữ liệu cho Backend hệ thống CLS (Classroom Management System).
 
-## 1. Kiến Trúc Cốt Lõi: Modular Monolith
-Hệ thống sử dụng **Modular Monolith Architecture**. So với Microservices, Modular Monolith giúp đơn giản hóa việc quản lý mã nguồn, triển khai (deployment) và giao dịch cơ sở dữ liệu (Database Transactions) ở giai đoạn MVP trong khi vẫn giữ nguyên tính độc lập của các nghiệp vụ, giúp dễ dàng chia tách thành Microservices trong tương lai.
+## 1. Kiến Trúc Cốt Lõi: N-Tier Architecture (Monolith)
+Để đảm bảo sự tinh gọn và đẩy nhanh quá trình phát triển MVP, hệ thống CLS Backend được xây dựng dưới dạng **một project Web API duy nhất** (`CLS.BackendAPI`). 
+Kiến trúc bên trong project sử dụng mô hình **N-Tier / MVC cơ bản** với sự phân tách rõ ràng qua cấu trúc thư mục.
 
-### 1.1 Phân chia Module (Logical Boundaries)
-Hệ thống được chia thành các Bounded Contexts (Modules) độc lập tương ứng với nghiệp vụ:
-- **`Module.Identity`**: Quản lý Xác thực (Authentication), Phân quyền (Authorization), Quản lý tải khoản và OTP.
-- **`Module.Learner`**: Quản lý vòng đời học viên, thông tin nhân trắc, thông tin phụ huynh, trạng thái (Active/Inactive).
-- **`Module.Academic`**: Quản lý Gói học phí (Learning Package), Lên lịch học (Scheduling), Điểm danh (Attendance), Đánh giá (Feedback) và rà soát Xung đột (Conflict Detection).
-- **`Module.Notification`**: Xử lý việc gửi định tuyến thông báo qua Email tới Phụ huynh (SendGrid/SMTP).
+### 1.1 Cấu trúc thư mục (Layers)
+Toàn bộ code được tổ chức trong các thư mục chính:
 
-### 1.2 Nguyên tắc giao tiếp giữa các Module
-- **Tuyệt đối không có Cross-Database Queries trực tiếp**: Module A không được JOIN trực tiếp vào Table của Module B ở Database layer.
-- **Giao tiếp đồng bộ (Synchronous)**: Sử dụng các `public interface` (ví dụ `IUserContextService`) được bộc lộ bởi Module kia để lấy thông tin. Chỉ dùng khi cần dữ liệu hiển thị (Read).
-- **Giao tiếp bất đồng bộ (Asynchronous)**: Sử dụng **In-Memory Event Bus (MediatR)**. Khi một Module thực hiện xong Command, nó sẽ publish một Domain Event (VD: `LearnerCreatedEvent`). Các Module khác sẽ Subscribe event này và tự động cập nhật Database của riêng nó hoặc thực hiện trigger logic khác. (VD: `Module.Notification` nghe event `AttendanceRecordedEvent` để gửi Email).
+- **`Controllers` (Presentation Layer)**
+  - Chứa các API Endpoints.
+  - Nhậm Request, điều phối sang tầng Service và trả kết quả (Response) về cho người dùng.
+  - Tuyệt đối **không** chứa Business Logic hoặc gọi trực tiếp Database.
+  
+- **`Services` (Business Logic Layer)**
+  - Chứa toàn bộ logic nghiệp vụ của hệ thống (ví dụ: `LearnerService`, `AcademicService`).
+  - Là cầu nối giữa Controller và Data.
+  - Thực hiện các phép tính toán, validation nghiệp vụ phức tạp trước khi yêu cầu lưu trữ dữ liệu.
+  
+- **`Models` (Domain & DTOs Layer)**
+  - Chứa các class biểu diễn dữ liệu.
+  - Bao gồm:
+    - **Entities**: Các lớp ánh xạ trực tiếp với bảng trong Database (ví dụ: `Learner`, `LearningPackage`).
+    - **DTOs (Data Transfer Objects)**: Các lớp dùng để giao tiếp với Client (ví dụ: `CreateLearnerRequest`, `LearnerResponse`).
+    - **Enums**: Danh mục trạng thái tĩnh (ví dụ: `LearnerStatus`).
+    
+- **`Data` (Data Access Layer)**
+  - Nơi duy nhất chịu trách nhiệm giao tiếp trực tiếp với Cơ sở dữ liệu thông qua Entity Framework Core.
+  - Chứa `ApplicationDbContext` (cấu hình DbSets và Fluent API).
+  - Có thể chứa pattern `Repositories` nếu việc truy vấn quá phức tạp, nếu không, Services có thể tiêm (inject) `ApplicationDbContext` trực tiếp để gọi lưu trữ.
 
-## 2. Kiến trúc Layer bên trong mỗi Module (Clean Architecture / Layered)
-Bên trong mỗi Module (Vd: `Module.Academic`) bắt buộc phải tuân theo Clean Architecture với độ sâu 4 layers:
+### 1.2 Luồng dữ liệu (Data Flow)
+**Client** -> **Controller** (Nhận DTO Request) -> **Service** (Xử lý Logic & gọi Data) -> **Data (DbContext)** (Truy vấn / Lưu DB) -> **Database**
 
-### 2.1 Web API Layer (Presentation)
-- **Nhiệm vụ**: Expose RESTful Endpoints.
-- **Thành phần**: `Controllers`, `Middlewares`, `Filters` (Exception/Validation), `Request/Response DTOs`.
-- **Ràng buộc**: Tuyệt đối không chứa Business Logic, không truy cập DbContext. Controller cực mỏng (nhận DTO -> Validation -> đẩy Request vào MediatR -> Trả về Client).
+1. Khách hàng gửi yêu cầu tới Endpoints trong `Controllers`.
+2. `Controller` validate Input cơ bản (kiểu dữ liệu, required) và chuyển DTO xuống `Service`.
+3. `Service` xử lý logic. Nếu cần đọc/ghi dữ liệu, `Service` gọi `ApplicationDbContext` ở gói `Data`.
+4. `Data` cập nhật thông tin trong CSDL.
+5. `Service` lấy kết quả, chuyển đổi thành DTO Response và trả về cho `Controller`.
+6. `Controller` trả HTTP Status và dữ liệu về Client.
 
-### 2.2 Application Layer (Use Cases)
-- **Nhiệm vụ**: Tổ chức các Use Cases của hệ thống.
-- **Thành phần**: Áp dụng Pattern **CQRS** thông qua thư viện `MediatR` với 2 thư mục rõ ràng:
-  - `Commands`: (Create/Update/Delete) Xử lý logic làm thay đổi state.
-  - `Queries`: (Get/List) Xử lý logic query dữ liệu. Trực tiếp dùng Dapper/EF Core AsNoTracking để tối ưu tốc độ đọc.
-- **Quy tắc**: Tầng này định nghĩa các Interface cho cơ sở hạ tầng (ví dụ: `IAcademicDbContext`, `IEmailService`). Nhưng nó không quan tâm bên dưới sử dụng SQL Server hay PostgreSQL.
+## 2. Dependency Injection & Cấu hình (IoC Rules)
+- Tận dụng container DI mặc định của ASP.NET Core (`builder.Services`).
+- Mọi dependency (Ví dụ: `ILearnerService`, `ApplicationDbContext`) phải được đăng ký trong `Program.cs`.
+- Tầng `Controllers` tiêm logic qua Interface (VD: `ILearnerService`). Không new các class một cách lỏng lẻo.
 
-### 2.3 Domain Layer (Core Enterprise Logic)
-- **Nhiệm vụ**: Trái tim của hệ thống. Nơi chứa mọi quy tắc nghiệp vụ (Business Rules).
-- **Thành phần**: `Entities`, `Value Objects`, `Domain Exceptions`, `Domain Events`.
-- **Ràng buộc**: **Lớp này KHÔNG có bất kỳ dependency nào (Framework-agnostic)**. Không có Entity Framework, không có ASP.NET. Các class ở đây phải là các class C# nguyên thủy (POCOs). Các Entities tự kiểm soát trạng thái của mình qua encapsulation (private setters, update qua method xử lý).
+## 3. Global Exception Handling
+- Hệ thống sử dụng một Middleware toàn cục (`GlobalExceptionHandlingMiddleware`) để gom và chuẩn hóa tất cả các exceptions.
+- **Không** sử dụng Try/Catch rải rác trong `Controllers`. Khi có lỗi nghiệp vụ cần chặn người dùng, hãy dùng `throw new CustomException(...)` (VD: `NotFoundException`, `ConflictException`) bên trong `Services`, hệ thống Middleware sẽ tự catch và format response.
 
-### 2.4 Infrastructure Layer (Cơ sở hạ tầng)
-- **Nhiệm vụ**: Implement các Interfaces định nghĩa ở Application. Tương tác với môi trường bên ngoài.
-- **Thành phần**: `DbContext` (EF Core), `Repositories`, Cấu hình giao tiếp 3rd Party API (SendGrid, Twilio), và `FileStorage`.
-- **Ràng buộc**: Lớp này là nơi duy nhất tham chiếu tới Database Drivers và External SDKs.
-
-## 3. Dependency Injection & Cấu hình (IoC Rules)
-- Mọi dependency (như services, repositories) phải được tiêm vào (inject) qua constructor. `(IServiceCollection)`
-- Tuân thủ thiết kế **Extension Method** cho DI. VD: Tầng Infrastructure phải tự khai báo `public static IServiceCollection AddAcademicInfrastructure(...)` để Program.cs gọi, thay vì cấu hình chằng chịt trong Program.cs.
-
-## 4. Quản trị Transactions (Unit of Work)
-- Sử dụng EF Core. Các thao tác Command (Update/Create/Delete) phải được gom lại một Transaction (Unit of Work). Khi Command Handler làm xong mọi xử lý, gọi `await _dbContext.SaveChangesAsync()` ở bước cuối cùng, để đảm bảo tính nguyên vẹn dữ liệu (ACID).
+## 4. Database & Transactions
+- Sử dụng Entity Framework Core.
+- Đối với các thao tác Update/Create phức tạp đòi hỏi ACID, hãy đảm bảo chỉ gọi `await _dbContext.SaveChangesAsync()` ở bước cuối cùng sau khi mọi lệnh thay đổi đã được add vào context.

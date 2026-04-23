@@ -1,0 +1,6 @@
+@CLS.BackendAPI_HostAddress = http://localhost:5117
+
+GET {{CLS.BackendAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

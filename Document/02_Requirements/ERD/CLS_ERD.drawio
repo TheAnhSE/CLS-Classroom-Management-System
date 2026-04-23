@@ -1,0 +1,391 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="erd1" name="1.5 CLS Entity Relationship Diagram">
+    <mxGraphModel dx="1548" dy="834" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="E_roles" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="roles" vertex="1">
+          <mxGeometry height="114" width="180" x="30" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E_roles_r0" parent="E_roles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ role_id (PK)" vertex="1">
+          <mxGeometry height="22" width="180" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_roles_r1" parent="E_roles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ role_name" vertex="1">
+          <mxGeometry height="22" width="180" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_roles_r2" parent="E_roles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ description" vertex="1">
+          <mxGeometry height="22" width="180" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_roles_r3" parent="E_roles" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ is_active" vertex="1">
+          <mxGeometry height="22" width="180" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_users" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="users" vertex="1">
+          <mxGeometry height="180" width="210" x="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E_users_r0" parent="E_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ user_id (PK)" vertex="1">
+          <mxGeometry height="22" width="210" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_users_r1" parent="E_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ role_id (FK)" vertex="1">
+          <mxGeometry height="22" width="210" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_users_r2" parent="E_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ email" vertex="1">
+          <mxGeometry height="22" width="210" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_users_r3" parent="E_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ first_name / last_name" vertex="1">
+          <mxGeometry height="22" width="210" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_users_r4" parent="E_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ phone_number" vertex="1">
+          <mxGeometry height="22" width="210" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_users_r5" parent="E_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ is_active" vertex="1">
+          <mxGeometry height="22" width="210" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_users_r6" parent="E_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ created_time" vertex="1">
+          <mxGeometry height="22" width="210" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_activity" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="activity_log" vertex="1">
+          <mxGeometry height="180" width="200" x="560" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E_activity_r0" parent="E_activity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ log_id (PK)" vertex="1">
+          <mxGeometry height="22" width="200" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_activity_r1" parent="E_activity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ user_id (FK)" vertex="1">
+          <mxGeometry height="22" width="200" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_activity_r2" parent="E_activity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ action" vertex="1">
+          <mxGeometry height="22" width="200" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_activity_r3" parent="E_activity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ entity_type" vertex="1">
+          <mxGeometry height="22" width="200" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_activity_r4" parent="E_activity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ entity_id" vertex="1">
+          <mxGeometry height="22" width="200" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_activity_r5" parent="E_activity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ ip_address" vertex="1">
+          <mxGeometry height="22" width="200" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_activity_r6" parent="E_activity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ created_time" vertex="1">
+          <mxGeometry height="22" width="200" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_subjects" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="subjects" vertex="1">
+          <mxGeometry height="114" width="190" x="870" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E_subjects_r0" parent="E_subjects" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ subject_id (PK)" vertex="1">
+          <mxGeometry height="22" width="190" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_subjects_r1" parent="E_subjects" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ subject_name" vertex="1">
+          <mxGeometry height="22" width="190" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_subjects_r2" parent="E_subjects" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ description" vertex="1">
+          <mxGeometry height="22" width="190" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_subjects_r3" parent="E_subjects" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ is_active" vertex="1">
+          <mxGeometry height="22" width="190" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_classrooms" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="classrooms" vertex="1">
+          <mxGeometry height="136" width="190" x="1130" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E_classrooms_r0" parent="E_classrooms" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ classroom_id (PK)" vertex="1">
+          <mxGeometry height="22" width="190" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_classrooms_r1" parent="E_classrooms" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ room_name" vertex="1">
+          <mxGeometry height="22" width="190" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_classrooms_r2" parent="E_classrooms" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ capacity" vertex="1">
+          <mxGeometry height="22" width="190" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_classrooms_r3" parent="E_classrooms" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ location" vertex="1">
+          <mxGeometry height="22" width="190" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_classrooms_r4" parent="E_classrooms" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ is_active" vertex="1">
+          <mxGeometry height="22" width="190" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_parents" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="parents" vertex="1">
+          <mxGeometry height="158" width="190" x="30" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="E_parents_r0" parent="E_parents" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ parent_id (PK)" vertex="1">
+          <mxGeometry height="22" width="190" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_parents_r1" parent="E_parents" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ full_name" vertex="1">
+          <mxGeometry height="22" width="190" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_parents_r2" parent="E_parents" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ email" vertex="1">
+          <mxGeometry height="22" width="190" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_parents_r3" parent="E_parents" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ phone_number" vertex="1">
+          <mxGeometry height="22" width="190" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_parents_r4" parent="E_parents" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ address" vertex="1">
+          <mxGeometry height="22" width="190" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_parents_r5" parent="E_parents" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ relationship" vertex="1">
+          <mxGeometry height="22" width="190" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_learners" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="learners" vertex="1">
+          <mxGeometry height="180" width="200" x="280" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="E_learners_r0" parent="E_learners" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ learner_id (PK)" vertex="1">
+          <mxGeometry height="22" width="200" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_learners_r1" parent="E_learners" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ parent_id (FK)" vertex="1">
+          <mxGeometry height="22" width="200" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_learners_r2" parent="E_learners" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ first_name / last_name" vertex="1">
+          <mxGeometry height="22" width="200" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_learners_r3" parent="E_learners" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ date_of_birth" vertex="1">
+          <mxGeometry height="22" width="200" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_learners_r4" parent="E_learners" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ gender" vertex="1">
+          <mxGeometry height="22" width="200" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_learners_r5" parent="E_learners" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ enrollment_date" vertex="1">
+          <mxGeometry height="22" width="200" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_learners_r6" parent="E_learners" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ status" vertex="1">
+          <mxGeometry height="22" width="200" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="learner_packages" vertex="1">
+          <mxGeometry height="202" width="205" x="550" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg_r0" parent="E_lpkg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ learner_package_id (PK)" vertex="1">
+          <mxGeometry height="22" width="205" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg_r1" parent="E_lpkg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ learner_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg_r2" parent="E_lpkg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ package_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg_r3" parent="E_lpkg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ assigned_date" vertex="1">
+          <mxGeometry height="22" width="205" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg_r4" parent="E_lpkg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ expiry_date" vertex="1">
+          <mxGeometry height="22" width="205" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg_r5" parent="E_lpkg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ total_sessions" vertex="1">
+          <mxGeometry height="22" width="205" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg_r6" parent="E_lpkg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ remaining_sessions" vertex="1">
+          <mxGeometry height="22" width="205" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_lpkg_r7" parent="E_lpkg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ status" vertex="1">
+          <mxGeometry height="22" width="205" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="E_packages" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="learning_packages" vertex="1">
+          <mxGeometry height="180" width="200" x="830" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="E_packages_r0" parent="E_packages" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ package_id (PK)" vertex="1">
+          <mxGeometry height="22" width="200" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_packages_r1" parent="E_packages" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ subject_id (FK)" vertex="1">
+          <mxGeometry height="22" width="200" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_packages_r2" parent="E_packages" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ package_name" vertex="1">
+          <mxGeometry height="22" width="200" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_packages_r3" parent="E_packages" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ total_sessions" vertex="1">
+          <mxGeometry height="22" width="200" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_packages_r4" parent="E_packages" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ duration_months" vertex="1">
+          <mxGeometry height="22" width="200" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_packages_r5" parent="E_packages" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ tuition_fee" vertex="1">
+          <mxGeometry height="22" width="200" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_packages_r6" parent="E_packages" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ is_active" vertex="1">
+          <mxGeometry height="22" width="200" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="notifications" vertex="1">
+          <mxGeometry height="202" width="210" x="30" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif_r0" parent="E_notif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ notification_id (PK)" vertex="1">
+          <mxGeometry height="22" width="210" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif_r1" parent="E_notif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ parent_id (FK)" vertex="1">
+          <mxGeometry height="22" width="210" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif_r2" parent="E_notif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ learner_id (FK)" vertex="1">
+          <mxGeometry height="22" width="210" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif_r3" parent="E_notif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ type" vertex="1">
+          <mxGeometry height="22" width="210" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif_r4" parent="E_notif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ recipient_email" vertex="1">
+          <mxGeometry height="22" width="210" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif_r5" parent="E_notif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ subject" vertex="1">
+          <mxGeometry height="22" width="210" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif_r6" parent="E_notif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ status" vertex="1">
+          <mxGeometry height="22" width="210" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_notif_r7" parent="E_notif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ sent_time" vertex="1">
+          <mxGeometry height="22" width="210" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sl" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="session_learners" vertex="1">
+          <mxGeometry height="92" width="200" x="310" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sl_r0" parent="E_sl" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ session_learner_id (PK)" vertex="1">
+          <mxGeometry height="22" width="200" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sl_r1" parent="E_sl" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ session_id (FK)" vertex="1">
+          <mxGeometry height="22" width="200" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sl_r2" parent="E_sl" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ learner_id (FK)" vertex="1">
+          <mxGeometry height="22" width="200" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_attend" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="attendance" vertex="1">
+          <mxGeometry height="180" width="205" x="580" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="E_attend_r0" parent="E_attend" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ attendance_id (PK)" vertex="1">
+          <mxGeometry height="22" width="205" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_attend_r1" parent="E_attend" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ session_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_attend_r2" parent="E_attend" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ learner_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_attend_r3" parent="E_attend" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ status" vertex="1">
+          <mxGeometry height="22" width="205" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_attend_r4" parent="E_attend" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ notes" vertex="1">
+          <mxGeometry height="22" width="205" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_attend_r5" parent="E_attend" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ recorded_by (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_attend_r6" parent="E_attend" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ recorded_time" vertex="1">
+          <mxGeometry height="22" width="205" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sessions" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="sessions" vertex="1">
+          <mxGeometry height="180" width="205" x="860" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sessions_r0" parent="E_sessions" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ session_id (PK)" vertex="1">
+          <mxGeometry height="22" width="205" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sessions_r1" parent="E_sessions" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ subject_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sessions_r2" parent="E_sessions" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ classroom_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sessions_r3" parent="E_sessions" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ teacher_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sessions_r4" parent="E_sessions" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ session_date" vertex="1">
+          <mxGeometry height="22" width="205" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sessions_r5" parent="E_sessions" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ start_time / end_time" vertex="1">
+          <mxGeometry height="22" width="205" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_sessions_r6" parent="E_sessions" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ status" vertex="1">
+          <mxGeometry height="22" width="205" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="feedback" vertex="1">
+          <mxGeometry height="202" width="205" x="1130" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback_r0" parent="E_feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ feedback_id (PK)" vertex="1">
+          <mxGeometry height="22" width="205" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback_r1" parent="E_feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ session_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback_r2" parent="E_feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ learner_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback_r3" parent="E_feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=2;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ teacher_id (FK)" vertex="1">
+          <mxGeometry height="22" width="205" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback_r4" parent="E_feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ performance_rating" vertex="1">
+          <mxGeometry height="22" width="205" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback_r5" parent="E_feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ behavioral_notes" vertex="1">
+          <mxGeometry height="22" width="205" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback_r6" parent="E_feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ is_on_time" vertex="1">
+          <mxGeometry height="22" width="205" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="E_feedback_r7" parent="E_feedback" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ submitted_time" vertex="1">
+          <mxGeometry height="22" width="205" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="E_settings" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;horizontal=1;" value="settings" vertex="1">
+          <mxGeometry height="158" width="200" x="1276" y="283" as="geometry" />
+        </mxCell>
+        <mxCell id="E_settings_r0" parent="E_settings" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=4;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ setting_id (PK)" vertex="1">
+          <mxGeometry height="22" width="200" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="E_settings_r1" parent="E_settings" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ setting_name" vertex="1">
+          <mxGeometry height="22" width="200" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="E_settings_r2" parent="E_settings" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ setting_type" vertex="1">
+          <mxGeometry height="22" width="200" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E_settings_r3" parent="E_settings" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ setting_value" vertex="1">
+          <mxGeometry height="22" width="200" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="E_settings_r4" parent="E_settings" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ priority" vertex="1">
+          <mxGeometry height="22" width="200" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="E_settings_r5" parent="E_settings" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;rotatable=0;fontSize=11;fontStyle=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ is_active" vertex="1">
+          <mxGeometry height="22" width="200" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="r01" edge="1" parent="1" source="E_roles" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_users" value="has">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r02" edge="1" parent="1" source="E_users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_activity" value="logs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r03" edge="1" parent="1" source="E_users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_sessions" value="teaches">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r04" edge="1" parent="1" source="E_subjects" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_packages" value="defines">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r05" edge="1" parent="1" source="E_subjects" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_sessions" value="schedules">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r06" edge="1" parent="1" source="E_classrooms" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_sessions" value="hosts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r07" edge="1" parent="1" source="E_parents" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_learners" value="sponsors">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r08" edge="1" parent="1" source="E_parents" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_notif" value="receives">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r09" edge="1" parent="1" source="E_learners" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_lpkg" value="enrolled in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r10" edge="1" parent="1" source="E_packages" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_lpkg" value="assigned via">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r11" edge="1" parent="1" source="E_learners" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_sl" value="joins">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r12" edge="1" parent="1" source="E_sessions" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_sl" value="contains">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r13" edge="1" parent="1" source="E_sessions" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_attend" value="recorded in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r14" edge="1" parent="1" source="E_learners" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_attend" value="marked in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r15" edge="1" parent="1" source="E_sessions" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_feedback" value="generates">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r16" edge="1" parent="1" source="E_learners" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_feedback" value="evaluated by">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r17" edge="1" parent="1" source="E_learners" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_notif" value="notified via">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r18" edge="1" parent="1" source="E_users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;startFill=0;endFill=0;fontSize=10;startArrow=ERmandOne;endArrow=ERmany;" target="E_feedback" value="submits">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

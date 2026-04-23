@@ -207,8 +207,8 @@ CREATE TABLE notifications (
     external_message_id NVARCHAR(100),
     created_time DATETIME2 DEFAULT GETDATE(),
 
-    FOREIGN KEY (parent_id) REFERENCES parents(parent_id) ON DELETE CASCADE,
-    FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE SET NULL
+    FOREIGN KEY (parent_id) REFERENCES parents(parent_id) ON DELETE NO ACTION,
+    FOREIGN KEY (learner_id) REFERENCES learners(learner_id) ON DELETE NO ACTION
 );
 
 -- 14. Settings

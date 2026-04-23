@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1440"/>
+<title>CLS – Create Session Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;width:1440px;min-height:900px;display:flex;}
+.sidebar{width:240px;background:#0f172a;min-height:100vh;padding:24px 0;flex-shrink:0;}
+.logo{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.1);}
+.logo-name{color:#fff;font-size:17px;font-weight:700;}
+.logo-sub{color:#64748b;font-size:11px;margin-top:2px;}
+.nav-section{padding:16px 12px 8px;font-size:10px;color:#475569;letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;color:#94a3b8;font-size:13px;cursor:pointer;border-radius:8px;margin:2px 8px;}
+.nav-item.active{background:rgba(59,130,246,.15);color:#60a5fa;font-weight:600;}
+.main{flex:1;display:flex;flex-direction:column;}
+.topbar{background:#fff;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e2e8f0;}
+.page-title{font-size:18px;font-weight:700;color:#0f172a;}
+.avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;}
+.content{padding:24px 28px;flex:1;}
+.form-layout{display:grid;grid-template-columns:1fr 340px;gap:24px;}
+.card{background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.section-title{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:8px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-group{}
+.form-group.full{grid-column:1/-1;}
+.form-label{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:6px;}
+.required{color:#ef4444;}
+.form-input,.form-select{width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;color:#0f172a;font-family:'Inter',sans-serif;background:#f9fafb;}
+.form-input:focus,.form-select:focus{outline:none;border-color:#2563eb;}
+.time-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end;}
+.time-sep{padding-bottom:10px;color:#64748b;text-align:center;}
+.learner-search{width:100%;padding:9px 14px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:13px;font-family:'Inter',sans-serif;margin-bottom:10px;}
+.learner-list{border:1.5px solid #e2e8f0;border-radius:10px;overflow:hidden;}
+.learner-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f1f5f9;cursor:pointer;}
+.learner-row:last-child{border-bottom:none;}
+.learner-row:hover{background:#f8fafc;}
+.learner-row.checked{background:#eff6ff;}
+.l-avatar{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;}
+.l-name{font-size:13px;font-weight:500;color:#0f172a;flex:1;}
+.l-pkg{font-size:11px;color:#94a3b8;}
+.check-box{width:16px;height:16px;border-radius:4px;border:2px solid #d1d5db;display:flex;align-items:center;justify-content:center;}
+.check-box.on{background:#2563eb;border-color:#2563eb;color:#fff;font-size:10px;}
+.conflict-alert{background:#fef2f2;border:1.5px solid #fecaca;border-radius:10px;padding:14px;margin-top:16px;}
+.conflict-title{font-size:13px;font-weight:700;color:#dc2626;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.conflict-detail{font-size:12px;color:#7f1d1d;}
+.ok-alert{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:14px;margin-top:16px;}
+.ok-title{font-size:13px;font-weight:700;color:#16a34a;margin-bottom:4px;}
+.summary-card{background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:14px;padding:22px;color:#fff;margin-bottom:16px;}
+.sum-title{font-size:12px;color:#93c5fd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;font-weight:600;}
+.sum-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px;}
+.sum-label{color:#94a3b8;}
+.sum-val{font-weight:600;}
+.sum-tag{display:inline-block;background:rgba(255,255,255,.1);padding:2px 8px;border-radius:4px;font-size:11px;}
+.btn-row{display:flex;gap:10px;margin-top:16px;}
+.btn-primary{flex:1;padding:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.btn-secondary{flex:1;padding:12px;background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;font-weight:500;color:#374151;cursor:pointer;font-family:'Inter',sans-serif;}
+.sel-count{background:#2563eb;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:auto;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo"><div class="logo-name">🏫 CLS System</div><div class="logo-sub">Academic Admin Portal</div></div>
+  <div class="nav-section">Main</div>
+  <div class="nav-item">📊 Dashboard</div>
+  <div class="nav-item">👥 Học viên</div>
+  <div class="nav-item">📦 Gói học phí</div>
+  <div class="nav-item active">📅 Lịch học</div>
+  <div class="nav-item">✅ Điểm danh</div>
+  <div class="nav-item">📝 Feedback</div>
+  <div class="nav-section">Reports</div>
+  <div class="nav-item">📈 Báo cáo</div>
+  <div class="nav-section">Admin</div>
+  <div class="nav-item">⚙️ Cài đặt</div>
+</div>
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:13px;color:#64748b;">Lịch học</span>
+      <span style="color:#94a3b8;">›</span>
+      <div class="page-title">Tạo Buổi học mới</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:20px;">🔔</span><div class="avatar">AA</div></div>
+  </div>
+  <div class="content">
+    <div class="form-layout">
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="section-title">📋 Thông tin Buổi học</div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Môn học <span class="required">*</span></label><select class="form-select"><option selected>Tiếng Anh</option><option>Kids Coding</option></select></div>
+            <div class="form-group"><label class="form-label">Ngày học <span class="required">*</span></label><input class="form-input" type="date" value="2026-04-25"/></div>
+            <div class="form-group full">
+              <label class="form-label">Thời gian <span class="required">*</span></label>
+              <div class="time-row">
+                <input class="form-input" type="time" value="08:00"/>
+                <div class="time-sep">→</div>
+                <input class="form-input" type="time" value="09:30"/>
+              </div>
+            </div>
+            <div class="form-group"><label class="form-label">Phòng học <span class="required">*</span></label><select class="form-select"><option selected>Phòng 101 (30 chỗ)</option><option>Phòng 102 (25 chỗ)</option><option>Phòng 103 (20 chỗ)</option></select></div>
+            <div class="form-group"><label class="form-label">Giáo viên <span class="required">*</span></label><select class="form-select"><option selected>Nguyễn Văn A</option><option>Trần Thị B</option><option>Lê Văn C</option></select></div>
+          </div>
+          <div class="ok-alert">
+            <div class="ok-title">✅ Không có xung đột lịch</div>
+            <div style="font-size:12px;color:#166534;">Phòng 101 và GV Nguyễn Văn A đều rảnh vào 08:00–09:30, T6 25/04/2026. (UC-13)</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">👥 Danh sách Học viên tham gia <div class="sel-count">5 đã chọn</div></div>
+          <input class="learner-search" type="text" placeholder="🔍 Tìm học viên..."/>
+          <div class="learner-list">
+            <div class="learner-row checked"><div class="check-box on">✓</div><div class="l-avatar" style="background:#6366f1;">MA</div><div style="flex:1;"><div class="l-name">Nguyễn Minh Anh</div><div class="l-pkg">English Pro · 2 buổi còn lại ⚠️</div></div></div>
+            <div class="learner-row checked"><div class="check-box on">✓</div><div class="l-avatar" style="background:#0ea5e9;">LP</div><div style="flex:1;"><div class="l-name">Lê Phương Linh</div><div class="l-pkg">IELTS Intensive · 48 buổi còn lại</div></div></div>
+            <div class="learner-row checked"><div class="check-box on">✓</div><div class="l-avatar" style="background:#10b981;">PH</div><div style="flex:1;"><div class="l-name">Phạm Hữu Nghĩa</div><div class="l-pkg">English Pro · 3 buổi còn lại ⚠️</div></div></div>
+            <div class="learner-row checked"><div class="check-box on">✓</div><div class="l-avatar" style="background:#f59e0b;">VT</div><div style="flex:1;"><div class="l-name">Võ Thị Thanh Trúc</div><div class="l-pkg">English Pro · 28 buổi còn lại</div></div></div>
+            <div class="learner-row"><div class="check-box"></div><div class="l-avatar" style="background:#ec4899;">NT</div><div style="flex:1;"><div class="l-name">Ngô Thành Tâm</div><div class="l-pkg">Chưa có gói học phí</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="summary-card">
+          <div class="sum-title">📋 Tóm tắt Buổi học</div>
+          <div class="sum-row"><span class="sum-label">Môn học</span><span class="sum-val">Tiếng Anh</span></div>
+          <div class="sum-row"><span class="sum-label">Ngày</span><span class="sum-val">T6, 25/04/2026</span></div>
+          <div class="sum-row"><span class="sum-label">Giờ</span><span class="sum-val">08:00 – 09:30</span></div>
+          <div class="sum-row"><span class="sum-label">Phòng</span><span class="sum-val">Phòng 101</span></div>
+          <div class="sum-row"><span class="sum-label">Giáo viên</span><span class="sum-val">Nguyễn Văn A</span></div>
+          <div class="sum-row"><span class="sum-label">Sĩ số</span><span class="sum-val"><span class="sum-tag">5/30 HV</span></span></div>
+          <div class="sum-row"><span class="sum-label">Conflict</span><span class="sum-val" style="color:#10b981;">✅ Hợp lệ</span></div>
+        </div>
+        <div class="card" style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:16px;">
+          <div style="font-weight:700;color:#0f172a;margin-bottom:8px;">ℹ️ Lưu ý</div>
+          • Hệ thống tự kiểm tra xung đột khi thay đổi Phòng / Giáo viên / Thời gian.<br/>
+          • Khi lưu, Parent của các HV sẽ nhận Email thông báo tự động (UC-20).<br/>
+          • HV có gói học phí &lt; 3 buổi sẽ được đánh dấu ⚠️ để gia hạn.
+        </div>
+        <div class="btn-row">
+          <button class="btn-secondary">Hủy</button>
+          <button class="btn-primary">💾 Lưu Buổi học</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

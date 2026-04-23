@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1440"/>
+<title>CLS – Learner List</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;width:1440px;min-height:900px;display:flex;}
+.sidebar{width:240px;background:#0f172a;min-height:100vh;padding:24px 0;flex-shrink:0;}
+.logo{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.1);}
+.logo-name{color:#fff;font-size:17px;font-weight:700;}
+.logo-sub{color:#64748b;font-size:11px;margin-top:2px;}
+.nav-section{padding:16px 12px 8px;font-size:10px;color:#475569;letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;color:#94a3b8;font-size:13px;cursor:pointer;border-radius:8px;margin:2px 8px;}
+.nav-item.active{background:rgba(59,130,246,.15);color:#60a5fa;font-weight:600;}
+.main{flex:1;display:flex;flex-direction:column;}
+.topbar{background:#fff;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e2e8f0;}
+.page-title{font-size:18px;font-weight:700;color:#0f172a;}
+.avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;}
+.content{padding:24px 28px;flex:1;}
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.search-input{flex:1;min-width:260px;padding:10px 14px 10px 36px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;color:#374151;font-family:'Inter',sans-serif;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.156a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E") no-repeat 12px center;}
+.filter-select{padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;color:#374151;font-family:'Inter',sans-serif;background:#fff;cursor:pointer;}
+.btn-primary{padding:10px 20px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
+.btn-export{padding:10px 16px;background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;color:#374151;cursor:pointer;font-family:'Inter',sans-serif;}
+.stats-strip{display:flex;gap:16px;margin-bottom:20px;}
+.stat-pill{background:#fff;border-radius:10px;padding:10px 18px;display:flex;align-items:center;gap:8px;box-shadow:0 1px 2px rgba(0,0,0,.05);font-size:13px;font-weight:500;color:#374151;}
+.table-card{background:#fff;border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+thead{background:#f8fafc;}
+th{padding:12px 16px;text-align:left;font-size:12px;font-weight:600;color:#64748b;letter-spacing:.3px;text-transform:uppercase;border-bottom:1px solid #e2e8f0;}
+td{padding:13px 16px;font-size:13px;color:#374151;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f8fafc;}
+.learner-name{font-weight:600;color:#0f172a;}
+.learner-id{font-size:11px;color:#94a3b8;margin-top:2px;}
+.avatar-sm{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;margin-right:10px;flex-shrink:0;}
+.learner-cell{display:flex;align-items:center;}
+.status-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;}
+.s-active{background:#dcfce7;color:#16a34a;}
+.s-inactive{background:#f1f5f9;color:#64748b;}
+.s-warning{background:#fef3c7;color:#92400e;}
+.progress-bar{background:#e2e8f0;border-radius:4px;height:6px;width:80px;overflow:hidden;display:inline-block;}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#2563eb,#60a5fa);}
+.progress-warn{background:linear-gradient(90deg,#ef4444,#f87171);}
+.action-btn{padding:5px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;color:#374151;}
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid #e2e8f0;}
+.page-info{font-size:13px;color:#64748b;}
+.page-btns{display:flex;gap:6px;}
+.page-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid #e2e8f0;background:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.page-btn.active{background:#2563eb;border-color:#2563eb;color:#fff;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo"><div class="logo-name">🏫 CLS System</div><div class="logo-sub">Academic Admin Portal</div></div>
+  <div class="nav-section">Main</div>
+  <div class="nav-item">📊 Dashboard</div>
+  <div class="nav-item active">👥 Học viên</div>
+  <div class="nav-item">📦 Gói học phí</div>
+  <div class="nav-item">📅 Lịch học</div>
+  <div class="nav-item">✅ Điểm danh</div>
+  <div class="nav-item">📝 Feedback</div>
+  <div class="nav-section">Reports</div>
+  <div class="nav-item">📈 Báo cáo</div>
+  <div class="nav-section">Admin</div>
+  <div class="nav-item">⚙️ Cài đặt</div>
+</div>
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:13px;color:#64748b;">Dashboard</span>
+      <span style="color:#94a3b8;">›</span>
+      <div class="page-title">Danh sách Học viên</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:20px;">🔔</span>
+      <div class="avatar">AA</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="stats-strip">
+      <div class="stat-pill">👥 <strong style="color:#2563eb;">127</strong> Tổng học viên</div>
+      <div class="stat-pill" style="color:#16a34a;">✅ <strong>112</strong> Đang hoạt động</div>
+      <div class="stat-pill" style="color:#64748b;">⏸ <strong>8</strong> Tạm dừng</div>
+      <div class="stat-pill" style="color:#ef4444;">⚠️ <strong>12</strong> Sắp hết gói</div>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn-export">📥 Xuất Excel</button>
+        <button class="btn-primary">+ Thêm Học viên</button>
+      </div>
+    </div>
+    <div class="toolbar">
+      <input class="search-input" type="text" placeholder="Tìm theo tên, email, mã học viên..." value=""/>
+      <select class="filter-select"><option>Tất cả trạng thái</option><option>Đang hoạt động</option><option>Tạm dừng</option><option>Đã rút</option></select>
+      <select class="filter-select"><option>Tất cả môn học</option><option>Tiếng Anh</option><option>Kids Coding</option></select>
+      <select class="filter-select"><option>Sắp xếp: Tên A-Z</option><option>Tên Z-A</option><option>Mới nhất</option><option>Gói sắp hết</option></select>
+    </div>
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th><input type="checkbox"/></th>
+            <th>Học viên</th>
+            <th>Phụ huynh / Email</th>
+            <th>Môn học</th>
+            <th>Gói học phí</th>
+            <th>Buổi còn lại</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td><div class="learner-cell"><div class="avatar-sm" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">MA</div><div><div class="learner-name">Nguyễn Minh Anh</div><div class="learner-id">#LRN-001</div></div></div></td>
+            <td><div style="font-size:13px;font-weight:500;">Nguyễn Thị Hoa</div><div style="font-size:11px;color:#94a3b8;">nthoa@gmail.com</div></td>
+            <td>Tiếng Anh</td>
+            <td>English Pro – 40 buổi</td>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar"><div class="progress-fill progress-warn" style="width:5%;"></div></div><span style="font-size:12px;color:#ef4444;font-weight:600;">2 buổi</span></div></td>
+            <td><div class="status-badge s-warning">⚠️ Sắp hết</div></td>
+            <td><button class="action-btn">Xem →</button></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td><div class="learner-cell"><div class="avatar-sm" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);">TK</div><div><div class="learner-name">Trần Tuấn Kiệt</div><div class="learner-id">#LRN-002</div></div></div></td>
+            <td><div style="font-size:13px;font-weight:500;">Trần Văn Dũng</div><div style="font-size:11px;color:#94a3b8;">tvdung@yahoo.com</div></td>
+            <td>Kids Coding</td>
+            <td>Coding Starter – 20 buổi</td>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar"><div class="progress-fill" style="width:65%;"></div></div><span style="font-size:12px;color:#374151;font-weight:600;">13 buổi</span></div></td>
+            <td><div class="status-badge s-active">✅ Hoạt động</div></td>
+            <td><button class="action-btn">Xem →</button></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td><div class="learner-cell"><div class="avatar-sm" style="background:linear-gradient(135deg,#10b981,#34d399);">LP</div><div><div class="learner-name">Lê Phương Linh</div><div class="learner-id">#LRN-003</div></div></div></td>
+            <td><div style="font-size:13px;font-weight:500;">Lê Thị Mai</div><div style="font-size:11px;color:#94a3b8;">ltmai@gmail.com</div></td>
+            <td>Tiếng Anh</td>
+            <td>IELTS Intensive – 60 buổi</td>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar"><div class="progress-fill" style="width:80%;"></div></div><span style="font-size:12px;color:#374151;font-weight:600;">48 buổi</span></div></td>
+            <td><div class="status-badge s-active">✅ Hoạt động</div></td>
+            <td><button class="action-btn">Xem →</button></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td><div class="learner-cell"><div class="avatar-sm" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">PH</div><div><div class="learner-name">Phạm Hữu Nghĩa</div><div class="learner-id">#LRN-004</div></div></div></td>
+            <td><div style="font-size:13px;font-weight:500;">Phạm Thị Lan</div><div style="font-size:11px;color:#94a3b8;">ptlan@gmail.com</div></td>
+            <td>Tiếng Anh</td>
+            <td>English Pro – 40 buổi</td>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar"><div class="progress-fill progress-warn" style="width:7.5%;"></div></div><span style="font-size:12px;color:#ef4444;font-weight:600;">3 buổi</span></div></td>
+            <td><div class="status-badge s-warning">⚠️ Sắp hết</div></td>
+            <td><button class="action-btn">Xem →</button></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td><div class="learner-cell"><div class="avatar-sm" style="background:linear-gradient(135deg,#ec4899,#f472b6);">VT</div><div><div class="learner-name">Võ Thị Thanh Trúc</div><div class="learner-id">#LRN-005</div></div></div></td>
+            <td><div style="font-size:13px;font-weight:500;">Võ Văn Tùng</div><div style="font-size:11px;color:#94a3b8;">vvtung@gmail.com</div></td>
+            <td>Kids Coding</td>
+            <td>Coding Pro – 30 buổi</td>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar"><div class="progress-fill" style="width:40%;"></div></div><span style="font-size:12px;color:#374151;font-weight:600;">12 buổi</span></div></td>
+            <td><div class="status-badge s-active">✅ Hoạt động</div></td>
+            <td><button class="action-btn">Xem →</button></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"/></td>
+            <td><div class="learner-cell"><div class="avatar-sm" style="background:linear-gradient(135deg,#64748b,#94a3b8);">NT</div><div><div class="learner-name">Ngô Thành Tâm</div><div class="learner-id">#LRN-006</div></div></div></td>
+            <td><div style="font-size:13px;font-weight:500;">Ngô Văn Hải</div><div style="font-size:11px;color:#94a3b8;">nvhai@gmail.com</div></td>
+            <td>Tiếng Anh</td>
+            <td>—</td>
+            <td><span style="font-size:12px;color:#94a3b8;">Chưa có gói</span></td>
+            <td><div class="status-badge s-inactive">⏸ Tạm dừng</div></td>
+            <td><button class="action-btn">Xem →</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <div class="page-info">Hiển thị 1–6 / 127 học viên</div>
+        <div class="page-btns">
+          <div class="page-btn">‹</div>
+          <div class="page-btn active">1</div>
+          <div class="page-btn">2</div>
+          <div class="page-btn">3</div>
+          <div class="page-btn">...</div>
+          <div class="page-btn">22</div>
+          <div class="page-btn">›</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
