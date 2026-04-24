@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using CLS.BackendAPI.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+using CLS.BackendAPI.Models;
 using CLS.BackendAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,13 +13,45 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Đăng ký ApplicationDbContext (Dùng chuỗi kết nối chuẩn trong appsettings, ở đây dùng tạm dummy cho MVP)
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") 
-                         ?? "Server=(localdb)\\mssqllocaldb;Database=CLS_DB;Trusted_Connection=True;"));
+// Configure CORS for Frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// Configure JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!))
+        };
+    });
+
+// Đăng ký ClsDbContext
+builder.Services.AddDbContext<ClsDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Đăng ký Services
 builder.Services.AddScoped<ILearnerService, LearnerService>();
+builder.Services.AddScoped<IPackageService, PackageService>();
+builder.Services.AddScoped<ISessionService, SessionService>();
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMasterDataService, MasterDataService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 var app = builder.Build();
 
@@ -28,9 +64,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Enable CORS
+app.UseCors("AllowFrontend");
+
 // Use Custom Global Error Handling
 app.UseMiddleware<CLS.BackendAPI.Middlewares.GlobalExceptionHandlingMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

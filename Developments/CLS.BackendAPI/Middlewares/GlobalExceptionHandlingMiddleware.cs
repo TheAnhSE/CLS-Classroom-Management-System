@@ -59,12 +59,11 @@ public class GlobalExceptionHandlingMiddleware
 
         context.Response.StatusCode = statusCode;
 
-        var response = new 
-        { 
-            Message = message, 
-            StatusCode = statusCode,
-            Errors = data 
-        };
+        var response = CLS.BackendAPI.Models.DTOs.Common.ApiResponse<object>.Error(statusCode, message);
+        if (data != null)
+        {
+            response.Data = data;
+        }
 
         var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         var result = JsonSerializer.Serialize(response, jsonOptions);
