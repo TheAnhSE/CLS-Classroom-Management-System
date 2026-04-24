@@ -12,7 +12,7 @@ export const useDashboard = () => {
     setError(null);
     try {
       const response = await dashboardService.getSummaryStats();
-      if (response.success && response.data) {
+      if (response.data) {
         setStats(response.data);
       } else {
         setError(response.message || 'Không thể tải dữ liệu dashboard.');

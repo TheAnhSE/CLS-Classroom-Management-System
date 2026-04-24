@@ -15,7 +15,7 @@ export const useLogin = () => {
     setError(null);
     try {
       const response = await authService.login(request);
-      if (response.success && response.data) {
+      if (response.data && response.data.token) {
         setToken(response.data.token);
         navigate('/'); // Redirect to dashboard
       } else {
